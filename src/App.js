@@ -1,10 +1,13 @@
-import logo from "./assets/logo-banner/flight logo.jpg";
+// import logo from "./assets/logo-banner/flight logo.jpg";
 import "./App.css";
+import Header from "./Components/Header";
+import Navbar from "./Components/Navbar";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <>
+      <div className="App">
+        {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p style={{ marginTop: "60px" }}>
           website is being deployed, it may take some time to fetch files.
@@ -16,9 +19,12 @@ function App() {
           rel="noopener noreferrer"
         >
           We will get back soon!!
-        </a>
-      </header>
-    </div>
+        </a> */}
+        {/* </header> */}
+        <Header />
+        <Navbar />
+      </div>
+    </>
   );
 }
 
