@@ -1,6 +1,7 @@
 import React from "react";
 import "./Header.css";
 import logo from "../assets/logo-banner/logo.jpeg";
+import { Button } from "@mui/material";
 function Header() {
   // const logo = window.location.origin + "/mmtLogo.png";
   const mybiz = window.location.origin + "/mybiz.png";
@@ -46,13 +47,14 @@ function Header() {
           </div>
         </div>
         <div className="header-login">
-          <img
+          <Button variant="contained">Login / Signup</Button>
+          {/* <img
             src={loginorcreate}
             alt="login"
             width="250"
             height="60"
             style={{ paddingRight: "5px" }}
-          />
+          /> */}
         </div>
       </div>
     </div>
