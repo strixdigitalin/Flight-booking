@@ -1,0 +1,15 @@
+.departure {
+    border: 1px solid gray;
+    border-radius: 3px;
+    padding:0.2rem  0.5rem;
+height: 7rem;
+width: 14rem;
+box-sizing: border-box;
+
+}
+
+.departure-text{
+    font-size: 20px;
+    font-weight: bold;
+    box-sizing: border-box;
+}

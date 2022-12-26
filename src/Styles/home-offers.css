@@ -1,0 +1,24 @@
+.offer-container {
+    background-color: #eeeeee;
+    width: 100%;
+}
+
+.offer-outer {
+    width: 80%;
+    margin:auto;
+   
+
+}
+.home-cards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    
+    gap: 2%;
+    
+}
+.single-card {  
+    /* border: 5px solid red; */
+    box-shadow: 10px 10px 10px rgb(173, 173, 173) !important;
+
+}

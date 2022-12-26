@@ -1,7 +1,8 @@
 import React from "react";
 import "./Header.css";
+import logo from "../assets/logo-banner/logo.jpeg";
 function Header() {
-  const logo = window.location.origin + "/mmtLogo.png";
+  // const logo = window.location.origin + "/mmtLogo.png";
   const mybiz = window.location.origin + "/mybiz.png";
   const travellug = window.location.origin + "/travellug.png";
   const loginorcreate = window.location.origin + "/loginorcreate.png";
@@ -27,8 +28,8 @@ function Header() {
             style={{ paddingRight: "10px" }}
           />
           <div>
-            <div className="header-mybiz-1">Introducing myBiz</div>
-            <div className="header-mybiz-2">MakeMyTrip for Business</div>
+            <div className="header-mybiz-1">Introducing </div>
+            <div className="header-mybiz-2">Mybookingcart for Business</div>
           </div>
         </div>
         <div className="header-mytrips" style={{ marginLeft: "60px" }}>

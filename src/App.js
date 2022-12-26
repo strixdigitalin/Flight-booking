@@ -2,6 +2,10 @@
 import "./App.css";
 import Header from "./Components/Header";
 import Navbar from "./Components/Navbar";
+import "./Styles/autocomplete-input.css";
+import "./Styles/departure.css";
+import "./Styles/font.css";
+import "./Styles/home-offers.css";
 
 function App() {
   return (
