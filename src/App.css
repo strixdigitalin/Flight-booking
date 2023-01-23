@@ -36,3 +36,46 @@
     transform: rotate(360deg);
   }
 }
+
+
+.text-c{
+  text-align: center;
+}
+.text-b{
+  font-weight: bold;
+}
+.text-400{
+  font-weight:400;
+}
+.text-500{
+  font-weight:500;
+}
+.text-600{
+  font-weight:600;
+}
+.fs15{
+font-size: 15px;
+}
+.fs17{
+font-size: 17px;
+}
+.fs20{
+font-size: 20px;
+}
+.fs23{
+font-size: 23px;
+}
+.fs25{
+font-size: 25px;
+}
+.fs30{
+font-size: 30px;
+}
+
+/* text */
+.w100{
+  width: 100%;
+}
+
+/* bg */
+.bg-common{   background-color: rgba(38, 157, 165, 0.068);}

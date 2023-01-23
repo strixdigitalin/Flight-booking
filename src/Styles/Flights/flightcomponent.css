@@ -1,0 +1,52 @@
+.fligh-destination{
+    background-color: aliceblue;
+    color: black;
+    width: 15rem;
+    min-height: 6rem;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+ font-size: 25px;   
+
+    
+}
+
+.enquiry-cards{
+    display: flex;
+    /* border: 1px solid red; */
+    width: 80%;
+    margin: auto;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.flight-short-card{
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 20px;
+    margin-top: 1rem;
+    min-height: 4rem;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    -webkit-box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
+    -moz-box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
+    box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
+}
+@media screen and (max-width: 768px) {
+    .fligh-destination{
+        background-color: aliceblue;
+        color: black;
+        width: 9rem;
+        min-height: 6rem;
+        border-radius: 5px;
+        padding: 10px;
+        box-sizing: border-box;
+     font-size: 25px;   
+     margin-top: 10px;
+    
+        
+    }
+}

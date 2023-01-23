@@ -9,8 +9,11 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 
-export default function MaterialUIPickers() {
-  const [value, setValue] = React.useState(dayjs("2023-01-01T21:11:54"));
+export default function MaterialUIPickers({
+  value = dayjs("2023-01-01T21:11:54"),
+  setValue,
+}) {
+  // const [value, setValue] = React.useState(dayjs("2023-01-01T21:11:54"));
 
   const handleChange = (newValue) => {
     setValue(newValue);

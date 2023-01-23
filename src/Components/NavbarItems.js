@@ -1,34 +1,44 @@
 import React from "react";
 
-import "./NavbarItems.css";
+import "../Styles/NavbarItems.css";
+import AirplanemodeActiveIcon from "@mui/icons-material/AirplanemodeActive";
+import { FlightImages } from "../Utils/Flight/Image";
 
 const links = [
   {
     to: "/",
     imgLink: window.location.origin + "/aeroplane.png",
     title: "Flights",
+    component: <img src={FlightImages.flight_image} height="40px" />,
   },
   {
     to: "/hotels",
     imgLink: window.location.origin + "/hotels.png",
-    title: "hotels",
+    title: "Hotels",
+    component: <img src={FlightImages.hotel_image} height="40px" />,
   },
   {
     to: "/homestays",
     imgLink: window.location.origin + "/villas.png",
-    title: "Villas&Apts",
+    title: "Bus",
+    component: <img src={FlightImages.bus_image} height="40px" />,
   },
 ];
-
+// <a target="_blank" href="https://icons8.com/icon/60607/hotel-star">Hotel Star</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
 function NavbarItems() {
   return (
     <div className="Navbar-search-items-icon">
-      {links.map(({ to, imgLink, title }) => {
+      {links.map(({ to, imgLink, title, component }) => {
         return (
           <div style={{ marginTop: "15px", justifyContent: "center" }}>
-            <img src={imgLink} alt="noimage" width="40" height="40" />
-
-            <div style={{ backgroundColor: "#FFFFFF", textDecoration: "none" }}>
+            {component}
+            <div
+              style={{
+                fontWeight: "bold",
+                textDecoration: "none",
+                color: "#000",
+              }}
+            >
               {title}
             </div>
           </div>

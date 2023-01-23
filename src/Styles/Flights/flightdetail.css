@@ -1,0 +1,54 @@
+.fligh-detail-cover{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    /* border: 1px solid black; */
+    gap: 3%;
+}
+.flight-detail-filter{
+    width: 25%;
+    max-height: 20rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    background-color: rgb(232, 232, 232);
+}
+.flight-detail-right-cover{
+    width: 75%;
+    /* background-color: rgba(38, 157, 165, 0.068); */
+    padding: 15px;
+    box-sizing: border-box;
+}
+.filter-ad{
+    height: 19rem;
+    width: 100%;
+    object-fit: cover;
+}
+@media screen and (max-width:768px){
+    .fligh-detail-cover{
+        width: 90%;
+        margin: auto;
+        display: flex;
+        flex-direction: column;
+        /* border: 1px solid black; */
+        gap: 3%;
+    }
+    .flight-detail-filter{
+        width: 90%;
+        max-height: 7rem;
+        margin-top: 2rem;
+        border-radius: 10px;
+        background-color: rgb(232, 232, 232);
+    }
+    .flight-detail-right-cover{
+        width: 100%;
+        /* background-color: rgba(38, 157, 165, 0.068); */
+        padding: 15px;
+        box-sizing: border-box;
+    }
+    .filter-ad{
+        height: 5rem;
+        width: 100%;
+        object-fit: cover;
+    }
+
+}

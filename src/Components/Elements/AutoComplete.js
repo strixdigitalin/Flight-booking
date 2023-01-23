@@ -106,7 +106,7 @@ export function AutoCompleteInputTo({
       </div>
       <div className="auto-cover">
         <input
-          className="auto-input2"
+          className="auto-input"
           placeholder={placeholder}
           onChange={onTextChange}
           value={inputValue}

@@ -4,10 +4,13 @@ import AutoCompleteInputFrom from "./Elements/AutoComplete";
 import { AutoCompleteInputTo } from "./Elements/AutoComplete";
 import Departure from "./Elements/Departure";
 import HomeCard from "./Elements/HomeCard";
-import "./Navbar.css";
+import "../Styles/Navbar.css";
 
 import NavbarItems from "./NavbarItems";
-function Navbar() {
+import { PostOffer } from "../Utils/API/Offler";
+import { useNavigate } from "react-router-dom";
+function BookingCard() {
+  const Navigate = useNavigate();
   const dropRefFrom = useRef();
   const dropRefTo = useRef();
   window.onclick = (e) => {
@@ -19,6 +22,10 @@ function Navbar() {
     if (e.target.className != "auto-input2") {
       dropRefTo.current.style.display = "none";
     }
+  };
+  const handleSubmit = () => {
+    PostOffer();
+    Navigate("/flights");
   };
 
   return (
@@ -42,7 +49,11 @@ function Navbar() {
           <Departure />
         </div>
         <div className="second-box-end-search">
-          <Button variant="contained" style={{ width: "20rem" }}>
+          <Button
+            variant="contained"
+            style={{ width: "20rem", height: "3rem", borderRadius: "40px" }}
+            onClick={handleSubmit}
+          >
             Search
           </Button>
         </div>
@@ -63,4 +74,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default BookingCard;

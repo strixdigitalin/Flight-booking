@@ -1,18 +1,20 @@
 .header-main {
     display: flex;
-    justify-content: space-around;
-    background-color: #061526;
+    justify-content: space-between;
+    /* background-color: #061526; */
+    background-color: #000913;
     color: white;
-    padding-top: 5px;
-    height: 5rem;
+    padding: 10px 1rem;
+    /* padding-top: 5px; */
+    /* height: 5rem; */
   }
   .header-mybiz,
   .header-mytrips {
     display: flex;
   }
-  .header-img-1 {
+  /* .header-img-1 {
     margin-right: 200px;
-  }
+  } */
   .header-mybiz-1,
   .header-mytrips-1 {
     font-size: 14px;
@@ -37,4 +39,15 @@
     color: #fff;
     font-size: 10px;
     line-height: 10px;
+  }
+.middle-header{
+  display: flex;
+  justify-content: space-between;
+  gap: 9%;
+}
+
+  @media screen and (max-width: 768px) {
+    .middle-header{
+      display: none ;
+    }
   }

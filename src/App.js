@@ -1,33 +1,33 @@
 // import logo from "./assets/logo-banner/flight logo.jpg";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "./Components/Header";
-import Navbar from "./Components/Navbar";
+import Navbar from "./Components/BookingCard";
+import Home from "./Pages/Home";
+import Flights from "./Pages/Flights";
 import "./Styles/autocomplete-input.css";
 import "./Styles/departure.css";
 import "./Styles/font.css";
 import "./Styles/home-offers.css";
+import "./Styles/Flights/flightcomponent.css";
+import "./Styles/Flights/flightdetail.css";
+import "./Styles/Login/login.css";
+import LoginPage from "./Pages/Authentication/Login";
 
 function App() {
   return (
     <>
-      <div className="App">
-        {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p style={{ marginTop: "60px" }}>
-          website is being deployed, it may take some time to fetch files.
-        </p>
-        <a
-          className="App-link"
-          href="/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          We will get back soon!!
-        </a> */}
-        {/* </header> */}
+      <BrowserRouter>
         <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/flights" element={<Flights />} />
+        </Routes>
+      </BrowserRouter>
+      {/* <div className="App">
         <Navbar />
-      </div>
+      </div> */}
     </>
   );
 }

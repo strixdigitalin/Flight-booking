@@ -5,6 +5,7 @@
 height: 7rem;
 width: 14rem;
 box-sizing: border-box;
+width: 22%;
 
 }
 
@@ -12,4 +13,17 @@ box-sizing: border-box;
     font-size: 20px;
     font-weight: bold;
     box-sizing: border-box;
+}
+@media screen and (max-width: 768px) {
+    .departure {
+        border: 1px solid gray;
+        border-radius: 3px;
+        padding:0.2rem  0.5rem;
+    height: 7rem;
+    width: 14rem;
+    box-sizing: border-box;
+    width: 40%;
+    margin-top: 2rem;
+    
+    }
 }

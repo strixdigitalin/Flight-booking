@@ -1,35 +1,45 @@
 .wrapper {
     position: relative;
     background-color: #144073;
-    background: linear-gradient(#061526, #144073);
-    height: 30rem;
+    /* background: linear-gradient(#061526, #144073); */
+    background: linear-gradient(#000913, #144073);
+    /* height: 30rem; */
+    padding: 1rem 0px 4rem 0px;
   }
   
   .first-box {
-    width: 950px;
+    width: 40%;
     height: 90px;
     position: relative;
     top: 50px;
-    left: 170px;
+    /* left: 170px; */
     border-radius: 10px;
     box-shadow: 0 1px 7px 0 rgb(0 0 0 / 40%);
-    background: #fff;
+    background: #f2f2f2;
     color: blue;
-    margin-left: 8%;
+    margin: auto;
+    /* margin-left: 8%; */
   }
   .second-box {
-    width: 1200px;
-    height: 280px;
+    width: 85%;
+    
+    
     border-radius: 10px;
+    
     box-shadow: 0 1px 7px 0 rgb(0 0 0 / 40%);
     background: #fff;
     margin: 0 auto;
     /* margin-top: 10rem; */
   
-    padding: 6% 2rem 0px 2rem;
+    padding: 5rem 2rem;
+    /* padding-top: 5rem; */
+    /* padding-: 5rem; */
+    box-sizing: border-box;
     display: flex;
     justify-content:center;
-    gap:2% ;
+    flex-wrap: wrap;
+    align-items: center;
+    /* gap:2% ; */
   
   }
   
@@ -39,7 +49,8 @@
  display: flex;
  justify-content: center;
 /* margin: auto; */
-  margin-top: -50px;
+  margin-top: -25px;
+
   /* marginA */
   }
   
@@ -50,6 +61,11 @@
         border: 1px dashed blue;
         border-radius: 4px;
         
+  }
+
+
+  @media screen and (max-width: 768px) {
+    
   }
 
 

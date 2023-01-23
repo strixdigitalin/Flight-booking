@@ -1,0 +1,24 @@
+.login-cover{
+    display: flex;
+    height: 100vh;
+    /* align-items: center; */
+    background: rgb(83,72,255);
+background: radial-gradient(circle, rgba(83,72,255,1) 0%, rgba(148,231,233,1) 100%);
+}
+.login-left{
+    width: 60%;
+}
+.login-right{
+    width: 60%;
+    margin: auto;
+    margin-top: 10rem;
+    /* border: 1px solid red; */
+    width: 30rem;
+    background-color:white;
+    height: 20rem;
+    padding: 20px;
+    border-radius: 10px;
+    -webkit-box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
+    -moz-box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
+    box-shadow: 16px 22px 31px -12px rgba(36,36,36,1);
+}

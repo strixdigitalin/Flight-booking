@@ -1,13 +1,13 @@
 import React from "react";
 import DatePicker from "./DatePicker";
 
-function Departure() {
+function Departure({ text = "Departure", departureDate, setDepartureDate }) {
   return (
     <div className="departure">
-      <div className="departure-text bold">Departure </div>
+      <div className="departure-text bold">{text} </div>
       <br />
       <div>
-        <DatePicker />
+        <DatePicker value={departureDate} setValue={setDepartureDate} />
       </div>
     </div>
   );
