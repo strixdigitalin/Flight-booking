@@ -22,13 +22,14 @@ export default function MaterialUIPickers({
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <Stack spacing={3}>
-        <DesktopDatePicker
+        <input type="date" className="date-picker" />
+        {/* <DesktopDatePicker
           label="Pick a date"
           inputFormat="DD/MM/YYYY"
           value={value}
           onChange={handleChange}
           renderInput={(params) => <TextField {...params} />}
-        />
+        /> */}
         {/* <MobileDatePicker
           label="Date mobile"
           inputFormat="MM/DD/YYYY"

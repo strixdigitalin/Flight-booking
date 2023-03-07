@@ -6,4 +6,7 @@ export const FlightImages = {
 
 export const AdCards = {
   flight_ad: require("../../assets/FlightDetail/adcard.jpg"),
+  support: require("../../assets/FlightDetail/support.png"),
+  savemoney: require("../../assets/FlightDetail/savemoney.png"),
+  pound: require("../../assets/FlightDetail/pound.png"),
 };

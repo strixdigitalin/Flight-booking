@@ -1,3 +1,8 @@
+:root {
+  --PrimaryColor:rgb(54, 181, 255)
+  
+}
+
 .App {
   text-align: center;
 }
@@ -53,6 +58,12 @@
 .text-600{
   font-weight:600;
 }
+.fs12{
+font-size: 12px;
+}
+.fs10{
+font-size: 10px;
+}
 .fs15{
 font-size: 15px;
 }
@@ -79,3 +90,21 @@ font-size: 30px;
 
 /* bg */
 .bg-common{   background-color: rgba(38, 157, 165, 0.068);}
+
+/* color */
+.colblue{
+  color: rgb(32, 173, 255);
+}
+
+/*  responsive */
+.dflex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dflexcol{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}

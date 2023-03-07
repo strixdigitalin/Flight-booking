@@ -4,7 +4,7 @@
 }
 
 .offer-outer {
-    width: 80%;
+    width: 75%;
     margin:auto;
    
 
@@ -21,4 +21,11 @@
     /* border: 5px solid red; */
     box-shadow: 10px 10px 10px rgb(173, 173, 173) !important;
 
+}
+.support-card{
+    padding: 20px 12.5%;
+    width: 100% !important;
+    box-sizing: border-box;
+    background-color: rgba(176, 176, 176, 0.3) !important  ;
+    
 }

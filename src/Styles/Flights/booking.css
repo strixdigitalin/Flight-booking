@@ -1,0 +1,70 @@
+.page-cover{
+    width: 100%;
+    padding: 0px 7% 0px 7%;
+    box-sizing: border-box;
+}
+.cancle-tag{
+    border: 1px solid rgb(234, 234, 234);
+    padding: 15px;
+    margin-top: 10px;
+    width: 100%;
+    background-color: rgb(230, 230, 230);
+    color: green;
+    font-weight: bold;
+}
+.booking-way-detail{
+    padding: 10px;
+    box-sizing: border-box;
+
+}
+.booking-single-way{
+    box-sizing: border-box;
+    margin-top: 10px;
+
+}
+.booking-email-cover {
+padding: 20px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+}
+.booking-passenger-detail-card {
+    padding: 20px;
+    box-sizing: border-box;
+}
+.booking-baggage{
+    margin-top: 3rem;
+    color: white;
+    /* padding: 12px; */
+    /* box-sizing: border-box; */
+}
+.baggage-upper{
+    background-color: rgb(54, 181, 255);
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.billing-info-card{
+    padding: 20px;
+    box-sizing: border-box;
+   background-color: rgb(222, 222, 222);
+    
+
+}
+.payment-input{
+    width: 100%;
+    padding: 5px;
+    background-color: white;
+    box-sizing: border-box;
+    border: 1px solid black;
+}
+.cardbg{
+    background-color: rgba(237, 237, 237, 0.326) !important;
+}
+
+.price-card{
+    background-color: rgb(54, 181, 255) !important;
+    padding: 20px;
+    
+}

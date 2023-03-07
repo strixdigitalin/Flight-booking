@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import DefVariables from "../../Utils/DefVariables";
+import Airports from "../../Utils/Flight/Airports.json";
 
 function AutoCompleteInputFrom({
   placeholder = "Search City",
   DropDownOption = DefVariables.cities,
   dropRefFrom,
+  name,
+  handleChange,
+  value,
   id,
 }) {
-  const [AllValues, setAllValues] = useState(DropDownOption);
+  const [AllValues, setAllValues] = useState(Airports);
   const [FilteredValues, setFilteredValues] = useState(DropDownOption);
   const [inputValue, setInputValue] = useState("");
   useEffect(() => {
@@ -54,10 +58,11 @@ function AutoCompleteInputFrom({
                 className="drop-options"
                 onClick={() => {
                   dropRefFrom.current.style.display = "none";
-                  setInputValue(item.name);
+                  setInputValue(item?.iata);
+                  handleChange(name, item?.iata);
                 }}
               >
-                {item.name}
+                {item?.name} ({item?.country})
               </div>
             );
           })}
@@ -70,9 +75,12 @@ export function AutoCompleteInputTo({
   placeholder = "Search City",
   DropDownOption = DefVariables.cities,
   dropRefTo,
+  name,
+  handleChange,
+  value,
   id,
 }) {
-  const [AllValues, setAllValues] = useState(DropDownOption);
+  const [AllValues, setAllValues] = useState(Airports);
   const [FilteredValues, setFilteredValues] = useState(DropDownOption);
   const [inputValue, setInputValue] = useState("");
   useEffect(() => {
@@ -119,7 +127,8 @@ export function AutoCompleteInputTo({
                 className="drop-options"
                 onClick={() => {
                   dropRefTo.current.style.display = "none";
-                  setInputValue(item.name);
+                  setInputValue(item.iata);
+                  handleChange(name, item.iata);
                 }}
               >
                 {item.name}

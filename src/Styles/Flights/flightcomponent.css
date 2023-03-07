@@ -19,12 +19,18 @@
     justify-content: space-around;
     flex-wrap: wrap;
 }
+.card-cover{
+    background-color: rgb(243, 243, 243);
+    border-radius: 10px;
+    margin-top: 1rem;
+    padding: 10px;
+}
 
 .flight-short-card{
     width: 100%;
     background-color: rgb(255, 255, 255);
     border-radius: 20px;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     min-height: 4rem;
     padding: 10px;
     box-sizing: border-box;
@@ -35,6 +41,30 @@
     -moz-box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
     box-shadow: 6px 6px 21px -9px rgba(36,36,36,1);
 }
+.fligh-short-inner{
+    width: 20%;
+}
+
+.support-row{
+    background-color: white;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    /* flex-direction: column; */
+}
+.support-cover{
+    width: 20%;
+    max-height: 20rem;
+    margin-top: 2rem;
+    border: 1px solid  rgb(255, 255, 255);
+    border-radius: 10px;
+    background-color: rgb(255, 255, 255);
+    padding: 2rem 5px 2rem 5px;
+    box-sizing: border-box;
+}
+
 @media screen and (max-width: 768px) {
     .fligh-destination{
         background-color: aliceblue;

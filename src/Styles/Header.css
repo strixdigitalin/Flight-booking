@@ -1,16 +1,39 @@
+.bgTheme{
+  background-color: var(--PrimaryColor);
+}
+.stickyHead{
+  position: sticky;
+  top: 0px;
+  z-index: 100;
+}
 .header-main {
     display: flex;
     justify-content: space-between;
     /* background-color: #061526; */
-    background-color: #000913;
+    /* background-color: #000913; */
+    background-color:var(--PrimaryColor);
     color: white;
-    padding: 10px 1rem;
+    padding: 5px 12.5%;
+    width: 100%;
+    box-sizing: border-box;
+    margin: auto;
+    align-items: center;
+
     /* padding-top: 5px; */
     /* height: 5rem; */
   }
-  .header-mybiz,
-  .header-mytrips {
+  .callnow{
+    background-color: rgb(110, 175, 110);
+    padding: 5px;
+    border-radius: 10px;
+    margin-top: 10px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+  }
+  .header-mybiz {
     display: flex;
+    width: "60px";
   }
   /* .header-img-1 {
     margin-right: 200px;
@@ -42,6 +65,7 @@
   }
 .middle-header{
   display: flex;
+  width: 20%;
   justify-content: space-between;
   gap: 9%;
 }

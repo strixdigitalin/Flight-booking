@@ -1,5 +1,6 @@
 import React from "react";
 import BookingCard from "../../Components/BookingCard";
+import AirPorts from "../../Utils/Flight/Airports.json";
 
 function index() {
   return (
