@@ -89,8 +89,17 @@ function BookingCard() {
             handleChange={handleChange}
             value={formData.returnDate}
           /> */}
+          <div className="second-box-end-search">
+            <Button
+              variant="contained"
+              style={{ width: "10rem", height: "3rem", borderRadius: "40px" }}
+              onClick={handleSubmit}
+            >
+              Search
+            </Button>
+          </div>
         </div>
-        <div className="second-box-end-search">
+        {/* <div className="second-box-end-search">
           <Button
             variant="contained"
             style={{ width: "20rem", height: "3rem", borderRadius: "40px" }}
@@ -98,7 +107,7 @@ function BookingCard() {
           >
             Search
           </Button>
-        </div>
+        </div> */}
       </div>
       <Card>
         <div className=" support-card">

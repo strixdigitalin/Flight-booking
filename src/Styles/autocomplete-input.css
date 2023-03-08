@@ -25,7 +25,7 @@ width: 22%;
     display: none;
     max-height: 16rem;
     overflow-y: scroll;
-    z-index: 100;
+    z-index: 1000;
 }
 .drop-options {
     border: 1px solid gray;
@@ -33,6 +33,7 @@ width: 22%;
     width: 100%;
     padding: 0.2rem 0.5rem;
     box-sizing: border-box;
+    z-index: 100;
 
 }
 .auto-input{
