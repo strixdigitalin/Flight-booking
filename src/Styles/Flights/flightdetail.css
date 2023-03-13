@@ -30,6 +30,16 @@
     width: 100%;
     object-fit: cover;
 }
+.banner-tex{
+ color: white;
+ position: absolute;
+ font-size: 75px;
+ font-style:oblique;
+ text-align: center;
+ top: 15%;   
+ left: 5%;
+
+}
 @media screen and (max-width:768px){
     .fligh-detail-cover{
         width: 90%;

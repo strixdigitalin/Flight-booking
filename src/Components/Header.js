@@ -1,11 +1,14 @@
 import React from "react";
 import "../Styles/Header.css";
-import logo from "../assets/logo-banner/logo.jpeg";
+// import logo from "../assets/logo-banner/logo.jpeg";
 import { Button, Grid } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ThemeColor } from "../Utils/Flight/Colors";
 import { AdCards, FlightImages } from "../Utils/Flight/Image";
 import NavbarItems from "./NavbarItems";
+
+import customerSupport from "../assets/Frontcard/customer-support.jpeg";
+import logo from "../assets/Frontcard/logo.png";
 function Header() {
   const Navigate = useNavigate();
   // const logo = window.location.origin + "/mmtLogo.png";
@@ -21,8 +24,8 @@ function Header() {
               className="header-img-1"
               src={logo}
               alt="mmt logo"
-              width="110"
-              height="50px"
+              width="200"
+              height="70px"
               style={{
                 objectFit: "contain",
               }}
@@ -30,7 +33,7 @@ function Header() {
             />
           </Grid>
           <Grid item md={6}>
-            <NavbarItems />
+            {/* <NavbarItems /> */}
           </Grid>
           <Grid
             item
@@ -44,12 +47,12 @@ function Header() {
             <div style={{ display: "flex", justifyContent: "end" }}>
               <div className="fs20 text-b">
                 Phone Only flight deals
-                <div className="callnow">Call Now : +18 452444492 </div>
+                <div className="callnow">Call Now : +18884070942 </div>
               </div>
               <div>
-                {" "}
                 <img
-                  src={AdCards.support}
+                  // src={AdCards.support}
+                  src={customerSupport}
                   width="50px"
                   style={{
                     background: "white",

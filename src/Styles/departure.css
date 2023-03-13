@@ -1,11 +1,21 @@
 .departure {
-    border: 1px solid gray;
+    /* border: 1px solid gray;
     border-radius: 3px;
     padding:0.2rem  0.5rem;
 height: 7rem;
 width: 14rem;
 box-sizing: border-box;
+width: 22%; */
+display: flex;
+align-items: center;
+height:8rem;
+border: 1px solid rgb(209, 209, 209);
+border-radius: 5px;
+flex-direction: column;
+justify-content: space-around;
+/* width: ; */
 width: 22%;
+background-color: rgba(239, 239, 239, 0.893);
 
 }
 

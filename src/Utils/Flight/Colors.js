@@ -1,5 +1,5 @@
 export const ThemeColor = {
-  primaryColor: "primary",
-  secondaryColor: " #1976d2",
-  thirdColor: "#80c8ff",
+  // primaryColor: "",
+  primaryColor: "rgb(161 56 250 / 48%)",
+  thirdColor: "rgb(161 56 250 / 48%)",
 };

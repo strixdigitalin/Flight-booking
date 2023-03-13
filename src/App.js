@@ -9,6 +9,7 @@ import "./Styles/Flights/booking.css";
 import "./Styles/font.css";
 import "./Styles/home-offers.css";
 import "./Styles/Flights/flightcomponent.css";
+import "./Styles/Flights/bookingcard.css";
 import "./Styles/Flights/footer.css";
 import "./Styles/Flights/flightdetail.css";
 import "./Styles/Login/login.css";
@@ -41,7 +42,7 @@ function App() {
           />
           <Route path="/login" element={<LoginPage />} />
           <Route
-            path="/flights/:origin/:destination/:departure_date/:cabin_calss"
+            path="/flights/:origin/:destination/:departure_date/:cabin_class"
             element={
               <>
                 <Header />

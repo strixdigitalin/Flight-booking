@@ -1,8 +1,13 @@
 import { Button, Card, Grid, Typography } from "@mui/material";
 import React, { useRef, useState } from "react";
-import AutoCompleteInputFrom from "./Elements/AutoComplete";
+import AutoCompleteInputFrom, {
+  CustomSearchBox,
+  DatePickerComponent,
+  MaterialAutoComplete,
+  SelectClass,
+} from "./Elements/AutoComplete";
 import { AutoCompleteInputTo } from "./Elements/AutoComplete";
-import Departure from "./Elements/Departure";
+import Departure, { ReturnDate } from "./Elements/Departure";
 import HomeCard from "./Elements/HomeCard";
 import "../Styles/Navbar.css";
 
@@ -10,6 +15,8 @@ import NavbarItems from "./NavbarItems";
 import { PostOffer } from "../Utils/API/Offler";
 import { useNavigate } from "react-router-dom";
 import { AdCards } from "../Utils/Flight/Image";
+import leftRight from "../assets/Frontcard/left-right.png";
+import flightBanner from "../assets/Frontcard/flightbanner.jpg";
 
 const initialData = {
   origin: "",
@@ -22,6 +29,12 @@ function BookingCard() {
   const Navigate = useNavigate();
   const dropRefFrom = useRef();
   const dropRefTo = useRef();
+  const [originField, setOriginField] = useState({});
+  const [destinationField, setDestinationField] = useState({});
+  const [date1, setDate1] = useState("");
+  const [date2, setDate2] = useState("");
+  const [oneWay, setOneWay] = useState(true);
+  const [cabinClass, setCabinClass] = useState("economy");
   const [formData, setFormData] = useState(initialData);
 
   window.onclick = (e) => {
@@ -40,16 +53,22 @@ function BookingCard() {
   };
 
   const handleSubmit = () => {
-    if (
-      formData.origin == "" ||
-      formData.destination == "" ||
-      formData.departure_date == ""
-    ) {
+    console.log(
+      originField,
+      destinationField,
+      date1,
+      date2,
+      "<<<< destinationfield"
+    );
+    // return null;
+    if (originField?.iata_code?.trim() == "") {
       return null;
     }
-
+    if (destinationField?.iata_code?.trim() == "") return null;
+    if (date1?.trim() == "") return null;
+    // if(destinationField.trim()=="")
     Navigate(
-      `/flights/${formData.origin}/${formData.destination}/${formData.departure_date}/${formData.cabin_class}`
+      `/flights/${originField.iata_code}/${destinationField.iata_code}/${date1}/${cabinClass}`
     );
 
     // PostOffer
@@ -58,48 +77,80 @@ function BookingCard() {
 
   return (
     <div>
-      <div className="wrapper">
-        {/* <div className="first-box">
-          <NavbarItems />
-        </div> */}
-        <div className="second-box">
-          <AutoCompleteInputFrom
-            dropRefFrom={dropRefFrom}
-            placeholder="From (Search City)"
-            id="from-input"
-            name="origin"
-            handleChange={handleChange}
-            value={formData.origin}
-          />
-          <AutoCompleteInputTo
-            placeholder="To (Search City)"
-            id="to-input"
-            dropRefTo={dropRefTo}
-            name="destination"
-            handleChange={handleChange}
-            value={formData.destination}
-          />
-          <Departure
-            name="departure_date"
-            handleChange={handleChange}
-            value={formData.departure_date}
-          />
-          {/* <Departure
-            name="returnDate"
-            handleChange={handleChange}
-            value={formData.returnDate}
-          /> */}
-          <div className="second-box-end-search">
-            <Button
-              variant="contained"
-              style={{ width: "10rem", height: "3rem", borderRadius: "40px" }}
-              onClick={handleSubmit}
-            >
-              Search
-            </Button>
-          </div>
+      <div style={{ position: "relative" }}>
+        <img src={flightBanner} width="100%" />
+        <div className="banner-tex">
+          Enjoy The Experience Of <br />
+          <span style={{ color: "aqua" }}> Flights</span> <br /> "In Your
+          Budget"
         </div>
-        {/* <div className="second-box-end-search">
+      </div>
+      <div></div>
+      {false && (
+        <>
+          {" "}
+          <div className="wrapper" style={{}}>
+            <div className="first-box">
+              <Button
+                variant={oneWay ? "contained" : "outlined"}
+                onClick={() => setOneWay(!oneWay)}
+              >
+                One Way
+              </Button>
+              <Button
+                variant={!oneWay ? "contained" : "outlined"}
+                onClick={() => setOneWay(!oneWay)}
+              >
+                Round Trip
+              </Button>
+            </div>
+
+            <div className="second-box">
+              <AutoCompleteInputFrom
+                dropRefFrom={dropRefFrom}
+                placeholder="From (Search City)"
+                id="from-input"
+                name="origin"
+                handleChange={handleChange}
+                value={formData.origin}
+              />
+              <img src={leftRight} width="50px" />
+
+              <AutoCompleteInputTo
+                placeholder="To (Search City)"
+                id="to-input"
+                dropRefTo={dropRefTo}
+                name="destination"
+                handleChange={handleChange}
+                value={formData.destination}
+              />
+              <Departure
+                name="departure_date"
+                handleChange={handleChange}
+                value={formData.departure_date}
+              />
+              {!oneWay && (
+                <ReturnDate
+                  name="returnDate"
+                  handleChange={handleChange}
+                  value={formData.returnDate}
+                />
+              )}
+              <div className="second-box-end-search">
+                <Button
+                  variant="contained"
+                  style={{
+                    width: "10rem",
+                    height: "3rem",
+                    borderRadius: "40px",
+                  }}
+                  onClick={handleSubmit}
+                >
+                  Search
+                </Button>
+              </div>
+            </div>
+            {/* <div className="second-box-end-search">
           <Button
             variant="contained"
             style={{ width: "20rem", height: "3rem", borderRadius: "40px" }}
@@ -108,6 +159,51 @@ function BookingCard() {
             Search
           </Button>
         </div> */}
+          </div>
+        </>
+      )}
+
+      <div className="booking-card">
+        <div className="top-buttons">
+          <Button
+            className="waybutt"
+            variant={!oneWay ? "outlined" : "contained"}
+            onClick={() => setOneWay(true)}
+          >
+            One Way
+          </Button>
+          <Button
+            className="waybutt"
+            variant={oneWay ? "outlined" : "contained"}
+            onClick={() => setOneWay(false)}
+          >
+            Round Trip
+          </Button>
+          <SelectClass setCabinClass={setCabinClass} cabinClass={cabinClass} />
+        </div>
+        <div className="booking-form">
+          {" "}
+          <CustomSearchBox
+            selectedValue={originField}
+            placeholder="Origin"
+            setSelectedValue={setOriginField}
+          />
+          <img src={leftRight} width="40px" />
+          <CustomSearchBox
+            placeholder="Destination"
+            selectedValue={destinationField}
+            setSelectedValue={setDestinationField}
+          />
+          <DatePickerComponent date={date1} setDate={setDate1} />
+          {!oneWay && <DatePickerComponent date={date2} setDate={setDate2} />}
+        </div>
+        <Button
+          variant="contained"
+          className="searchButt"
+          onClick={handleSubmit}
+        >
+          Search
+        </Button>
       </div>
       <Card>
         <div className=" support-card">
@@ -121,11 +217,11 @@ function BookingCard() {
                   justifyContent: "center",
                 }}
               >
-                <Typography fontWeight="bold">
+                <Typography fontWeight="bold" fontSize={25}>
                   Live 24/7 <br />
                   Support
                 </Typography>
-                <img src={AdCards.support} width="60px" height="60px" />
+                <img src={AdCards.support} width="100px" height="100px" />
               </div>
             </Grid>
             <Grid item md={4} textAlign="center" alignItems="center">
@@ -137,8 +233,10 @@ function BookingCard() {
                   justifyContent: "center",
                 }}
               >
-                <Typography fontWeight="bold">Save Money</Typography>
-                <img src={AdCards.pound} width="60px" height="60px" />
+                <Typography fontWeight="bold" fontSize={25}>
+                  Save Money
+                </Typography>
+                <img src={AdCards.pound} width="100px" height="100px" />
               </div>
             </Grid>
             <Grid item md={4} textAlign="center">
@@ -150,16 +248,17 @@ function BookingCard() {
                   justifyContent: "center",
                 }}
               >
-                <Typography fontWeight="bold">
-                  Free Cancelation within 24 hours
+                <Typography fontWeight="bold" fontSize={25}>
+                  Free Cancelation <br /> within 24 hours
                 </Typography>
-                <img src={AdCards.savemoney} width="60px" height="60px" />
+                <img src={AdCards.savemoney} width="100px" height="100px" />
               </div>
             </Grid>
           </Grid>
         </div>
       </Card>
-      <div className="offer-container">
+
+      {/* <div className="offer-container">
         <div className="home-offers offer-outer">
           <div className="bold" style={{ fontSize: "30px" }}>
             More Offers
@@ -170,7 +269,7 @@ function BookingCard() {
             })}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

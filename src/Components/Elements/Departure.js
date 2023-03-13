@@ -6,7 +6,32 @@ function Departure({ text = "Departure", name, handleChange, value }) {
     <div className="departure">
       <div className="departure-text bold">{text} </div>
       <br />
-      <div>
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
+        <input
+          type="date"
+          className="date-picker"
+          style={
+            {
+              // borderRa
+            }
+          }
+          value={value}
+          onChange={(e) => {
+            handleChange(name, e.target.value);
+          }}
+        />
+        {/* <DatePicker value={departureDate} setValue={setDepartureDate} /> */}
+      </div>
+    </div>
+  );
+}
+
+function ReturnDate({ text = "Return", name, handleChange, value }) {
+  return (
+    <div className="departure">
+      <div className="departure-text bold">{text} </div>
+      <br />
+      <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
         <input
           type="date"
           className="date-picker"
@@ -20,5 +45,6 @@ function Departure({ text = "Departure", name, handleChange, value }) {
     </div>
   );
 }
+export { ReturnDate };
 
 export default Departure;

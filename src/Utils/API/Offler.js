@@ -69,11 +69,12 @@ export const GetOFfer = (payload, callBack) => {
 };
 
 export const PostOffer = (payload, callBack) => {
-  const { origin, destination, departure_date } = payload;
+  const { origin, destination, departure_date, cabin_class } = payload;
   var formdata = new FormData();
   formdata.append("ORIGIN", origin);
   formdata.append("DESTINATION", destination);
   formdata.append("DATE", departure_date);
+  formdata.append("CABIN", cabin_class);
 
   var requestOptions = {
     method: "POST",

@@ -1,0 +1,93 @@
+.booking-card{
+   display: flex;
+   flex-direction: column;
+gap: 1rem;
+position: relative;
+   align-items: center;justify-content: center;
+    border: 1px solid rgb(226, 226, 226);
+    width: 75%;
+    margin: auto;
+    /* height: 10rem; */
+    /* padding: 0.8rem; */
+    border-radius: 20px;
+    /* margin-top: -30px; */
+    /* background-color: white !important; */
+    /* z-index: 100; */
+    padding: 40px 0px;
+    background:#f7f7f7c4;
+
+
+    -webkit-box-shadow: 0px 23px 49px -20px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 23px 49px -20px rgba(0,0,0,0.75);
+    box-shadow: 0px 23px 49px -20px rgba(0,0,0,0.75);
+    
+
+}
+.booking-form{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.top-buttons{
+    display: flex;
+    justify-content: center;
+    /* justify-content: flex-start; */
+    width: 100%;
+    gap: 2rem;
+
+}
+.auto-inputbox{
+ position: relative;   
+}
+.dropdownoption{
+    position: absolute;
+    top: 3.2rem;
+    background-color: white;
+    z-index: 100;
+    /* padding: 20px; */
+    border: 1px solid gray;
+    overflow-y: scroll;
+    max-height: 20rem;
+}
+.singlecity{
+    border-bottom: 1px solid gray;
+    padding: 10px;
+}
+.input-boxform{
+    border: 1px solid gray !important;
+    border-radius: 20px !important;
+    height: 3rem;
+    padding: 0px 20px;
+    box-sizing: border-box;
+    font-size: 18px;
+    font-weight: 500;
+    
+    /* width: 30rem; */
+}
+.coverdate{
+
+}
+.coverdate  input {
+padding: 10px;
+box-sizing: border-box;
+width: 15rem;
+font-size: 18px;
+}
+
+.waybutt{
+    height: 2rem;
+}
+.searchButt{
+    width: 16rem;
+    position: absolute !important;
+    top: 90%;
+    font-size: 18px !important;
+    border-radius: 25px !important;
+    /* margin-top: 20px !important; */
+    
+}
+.date-picker{
+    border: 1px solid gray;
+border-radius: 20px !important;
+}

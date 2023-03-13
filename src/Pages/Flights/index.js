@@ -213,8 +213,8 @@ export const ImageText = ({ src, text }) => {
   console.log(src, "<<< this is res");
   return (
     <div className="support-row">
-      <img src={src} width="40px" height="40px" />
-      <div style={{ marginLeft: "1rem", fontSize: "14px " }}> {text}</div>
+      <img src={src} width="50px" height="50px" />
+      <div style={{ marginLeft: "1rem", fontSize: "20px " }}> {text}</div>
     </div>
   );
 };

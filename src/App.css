@@ -1,5 +1,6 @@
 :root {
-  --PrimaryColor:rgb(54, 181, 255)
+  /* --PrimaryColor:rgb(54, 181, 255) */
+  --PrimaryColor:rgb(161 56 250 / 86%)
   
 }
 
@@ -89,7 +90,7 @@ font-size: 30px;
 }
 
 /* bg */
-.bg-common{   background-color: rgba(38, 157, 165, 0.068);}
+.bg-common{   background-color: rgb(255, 255, 255);}
 
 /* color */
 .colblue{

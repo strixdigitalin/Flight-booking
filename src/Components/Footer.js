@@ -45,7 +45,7 @@ function Footer() {
           <Typography>
             7910 4th st N, Ste 300 St Petersburg Florida 33702
           </Typography>
-          <Typography>+18 452444492, contact@laratraveltech.com</Typography>
+          <Typography>+18 452444492, contact@mybookingcart.com</Typography>
         </Grid>
       </Grid>
     </div>
