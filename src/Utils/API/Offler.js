@@ -1,5 +1,6 @@
 import { DUFFEL_AUTH_TOKEN, DUFFEL_VERSION } from ".";
-export const BASE_URL = "http://localhost:5000";
+// export const BASE_URL = "http://localhost:5000";
+export const BASE_URL = "http://100.26.10.214:5000";
 export const parse = (data) => JSON.parse(data);
 export const GetOFfer = (payload, callBack) => {
   var myHeaders = new Headers();
