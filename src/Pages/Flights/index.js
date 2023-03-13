@@ -108,7 +108,7 @@ function FlightOffer() {
             }}
             renderInput={(params) => {
               // console.log(params);
-              return <TextField {...params} label="Movie" />;
+              return <TextField {...params} label="Origin" />;
             }}
           />
           <Autocomplete
@@ -129,7 +129,7 @@ function FlightOffer() {
             }}
             renderInput={(params) => {
               // console.log(params);
-              return <TextField {...params} label="Movie" />;
+              return <TextField {...params} label="Departure" />;
             }}
           />
           {/* {errorData.destination && <div>Origin is required</div>} */}
