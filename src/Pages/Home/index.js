@@ -2,10 +2,10 @@ import React from "react";
 import BookingCard from "../../Components/BookingCard";
 import AirPorts from "../../Utils/Flight/Airports.json";
 
-function index() {
+function index({ trans }) {
   return (
     <div>
-      <BookingCard />
+      <BookingCard trans={trans} />
     </div>
   );
 }

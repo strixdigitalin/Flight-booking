@@ -3,7 +3,11 @@ import React, { useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import { styled } from "@mui/material/styles";
 import { useParams } from "react-router-dom";
-import { getOnlyOfferbyOfferId } from "../../Utils/API/Offler";
+import {
+  cancelOrder,
+  createOrder,
+  getOnlyOfferbyOfferId,
+} from "../../Utils/API/Offler";
 import {
   Button,
   Card,
@@ -22,6 +26,7 @@ import {
   getMonths,
   getYears,
 } from "../../Utils/Flight/CommonFunctions";
+import { StripePayment } from "../../Utils/API/PaymentAPI";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -32,13 +37,53 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 function Booking() {
   const { id } = useParams();
+  const [showSuccessMessage, setShowSuccessMessage] = useState(null);
   const [orderData, setOrderData] = useState({});
+  const [getorderConfirmData, setGetorderConfirmData] = useState(null);
+
   useEffect(() => {
     getOnlyOfferbyOfferId(id, (res) => {
       console.log(res.data.data, "<<<flight data");
       setOrderData(res.data.data);
     });
   }, []);
+  const cancelORder = () => {
+    cancelOrder(getorderConfirmData.id, (res) => {
+      console.log(res, "<<< resorder");
+      if (res.success) {
+        alert("Order Cancelled");
+        setShowSuccessMessage("Order successfully Created ");
+        setGetorderConfirmData(res.data.data);
+      }
+      setTimeout(() => {
+        setShowSuccessMessage(null);
+      }, 5000);
+    });
+  };
+  const confirmOrder = () => {
+    console.log(orderData?.passengers[0]);
+    // StripePayment();
+    StripePayment("64185544f427088880e73e02", (res) => {
+      console.log(res, "<<<<response");
+      if (res.success) {
+        window.location.href = res.url;
+      }
+    });
+    // return null;
+    createOrder(
+      {
+        OFFER_ID: id,
+        TOTAL_AMOUNT: orderData.total_amount,
+        TOTAL_CURRENCY: orderData.total_currency,
+        ADULT_PASSENGER_ID_1: orderData?.passengers[0]?.id,
+      },
+      (res) => {
+        console.log(res, "<< this is res");
+        alert("Order Successfully Created");
+        setGetorderConfirmData(res.data.data);
+      }
+    );
+  };
 
   return (
     <div className="page-cover">
@@ -53,7 +98,10 @@ function Booking() {
             Flight Details
           </Typography>
           <Card className="booking-way-detail cardbg">
-            <Typography>Friday march 17 Mubai diel k</Typography>
+            <Typography>
+              Order Created At : {getDateTimeFun(orderData?.created_at).date}{" "}
+              {getDateTimeFun(orderData?.created_at).time}
+            </Typography>
 
             {orderData?.slices?.map((slice) => {
               return slice?.segments?.map((segment) => {
@@ -98,6 +146,100 @@ function Booking() {
               });
             })}
           </Card>
+          <div
+            style={{
+              width: "50%",
+              margin: "auto",
+              marginTop: "2rem",
+              marginBottom: "2rem",
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {getorderConfirmData == null && (
+              <Button
+                variant="contained"
+                color="success"
+                onClick={confirmOrder}
+                style={{ width: "100%", padding: "12px", marginTop: "2rem" }}
+              >
+                Confirm Booking
+              </Button>
+            )}
+            {getorderConfirmData != null && (
+              <div className="booking-way-detail cardbg">
+                <Grid
+                  container
+                  spacing={1}
+                  // columnSpacing={3  }
+                  mt={1}
+                  style={{ alignItems: "center" }}
+                >
+                  <Grid
+                    mt={1}
+                    container
+                    spacing={2}
+                    columnSpacing={3}
+                    style={{ alignItems: "center" }}
+                  >
+                    <Grid item md={4} textAlign="right">
+                      <Typography fontWeight={"bold"}>*Order Id</Typography>
+                    </Grid>
+                    <Grid item md={4}>
+                      {getorderConfirmData?.id}
+                    </Grid>
+                    <Grid item md={4}></Grid>
+                  </Grid>
+                  <Grid
+                    mt={1}
+                    container
+                    spacing={2}
+                    columnSpacing={3}
+                    style={{ alignItems: "center" }}
+                  >
+                    <Grid item md={4} textAlign="right">
+                      <Typography fontWeight={"bold"}>Amount</Typography>
+                    </Grid>
+                    <Grid item md={4}>
+                      {getorderConfirmData?.base_amount}
+                    </Grid>
+                    <Grid item md={4}></Grid>
+                  </Grid>
+                  <Grid
+                    mt={1}
+                    container
+                    spacing={2}
+                    columnSpacing={3}
+                    style={{ alignItems: "center" }}
+                  >
+                    <Grid item md={4} textAlign="right">
+                      <Typography fontWeight={"bold"}>Currency</Typography>
+                    </Grid>
+                    <Grid item md={4}>
+                      {getorderConfirmData?.base_currency}
+                    </Grid>
+                    <Grid item md={4}></Grid>
+                  </Grid>
+                  <Grid
+                    mt={1}
+                    container
+                    spacing={2}
+                    columnSpacing={3}
+                    style={{ alignItems: "center" }}
+                  >
+                    <Grid item md={4} textAlign="right">
+                      <Typography fontWeight={"bold"}>Created At</Typography>
+                    </Grid>
+                    <Grid item md={4}>
+                      {getDateTimeFun(getorderConfirmData?.created_at).date}{" "}
+                      {getDateTimeFun(getorderConfirmData?.created_at).time}{" "}
+                    </Grid>
+                    <Grid item md={4}></Grid>
+                  </Grid>
+                </Grid>
+              </div>
+            )}
+          </div>
           <Typography variant="h5" fontSize={18} fontWeight={600} mb={1} mt={4}>
             WHERE TO SEND YOUR CONFIRMATION
           </Typography>
@@ -441,6 +583,23 @@ function Booking() {
               </Grid>
             </Grid>
           </Card>
+          {getorderConfirmData != null && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+              }}
+            >
+              <Button
+                variant="contained"
+                color="warning"
+                style={{ marginTop: "20px" }}
+                onClick={cancelORder}
+              >
+                Cancel Order
+              </Button>
+            </div>
+          )}
         </Grid>
       </Grid>
     </div>

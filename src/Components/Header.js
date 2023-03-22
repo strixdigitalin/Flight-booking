@@ -1,7 +1,7 @@
 import React from "react";
 import "../Styles/Header.css";
 // import logo from "../assets/logo-banner/logo.jpeg";
-import { Button, Grid } from "@mui/material";
+import { Button, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ThemeColor } from "../Utils/Flight/Colors";
 import { AdCards, FlightImages } from "../Utils/Flight/Image";
@@ -32,8 +32,23 @@ function Header() {
               // height="38"
             />
           </Grid>
-          <Grid item md={6}>
+          <Grid item md={5}>
             {/* <NavbarItems /> */}
+          </Grid>
+          <Grid item md={1} style={{}}>
+            {/* <InputLabel id="demo-simple-select-label">Language</InputLabel> */}
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={10}
+              fullWidth
+              label="Gender"
+              // onChange={handleChange}
+            >
+              <MenuItem value={10}>English</MenuItem>
+              <MenuItem value={20}>Spanish</MenuItem>
+              {/* <MenuItem value={30}>Other</MenuItem> */}
+            </Select>
           </Grid>
           <Grid
             item
@@ -64,36 +79,7 @@ function Header() {
               </div>
             </div>
           </Grid>
-          {/* <Grid item md={1} textAlign="end">
-            <img
-              src={AdCards.support}
-              width="50px"
-              style={{
-                background: "white",
-                border: "3px solid green",
-                padding: "5px",
-                borderRadius: "50%",
-              }}
-            />
-          </Grid> */}
         </Grid>
-
-        {/* ---- */}
-        {/* <div className="header-login">
-          <Button
-            variant="outlined"
-            onClick={() => {
-              Navigate("/login");
-            }}
-            style={{
-              textTransform: "initial",
-              border: "1px solid white",
-              color: "white",
-            }}
-          >
-            <span>Login / Signup</span>
-          </Button>
-        </div> */}
       </div>
     </div>
   );

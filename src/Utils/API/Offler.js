@@ -71,16 +71,25 @@ export const GetOFfer = (payload, callBack) => {
 };
 
 export const PostOffer = (payload, callBack) => {
-  const { origin, destination, departure_date, cabin_class } = payload;
-  var formdata = new FormData();
-  formdata.append("ORIGIN", origin);
-  formdata.append("DESTINATION", destination);
-  formdata.append("DATE", departure_date);
-  formdata.append("CABIN", cabin_class);
+  const { origin, destination, departure_date, cabin_class, passengers } =
+    payload;
+  console.log(passengers, "<<<< thisispassengers");
+  // return null;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    PASSENGERS: passengers,
+    ORIGIN: origin,
+    DESTINATION: destination,
+    DATE: departure_date,
+    CABIN: cabin_class,
+  });
 
   var requestOptions = {
     method: "POST",
-    body: formdata,
+    headers: myHeaders,
+    body: raw,
     redirect: "follow",
   };
 
@@ -122,6 +131,43 @@ export const getOnlyOfferbyOfferId = (offerId, callBack) => {
   };
 
   fetch(BASE_URL + "/offer/fetch-by-id?OFFER_ID=" + offerId, requestOptions)
+    .then((response) => response.text())
+    .then((result) => callBack(JSON.parse(result)))
+    .catch((error) => console.log("error", error));
+};
+
+export const cancelOrder = (id, callBack) => {
+  var requestOptions = {
+    method: "POST",
+    redirect: "follow",
+  };
+
+  fetch(BASE_URL + "/order/cancel/" + id, requestOptions)
+    .then((response) => response.text())
+    .then((result) => callBack(JSON.parse(result)))
+    .catch((error) => console.log("error", error));
+};
+
+export const createOrder = (payload, callBack) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Duffel-Version", DUFFEL_VERSION);
+  myHeaders.append("Authorization", DUFFEL_AUTH_TOKEN);
+  myHeaders.append("Content-Type", "application/json");
+  var raw = JSON.stringify({
+    OFFER_ID: payload.OFFER_ID,
+    TOTAL_AMOUNT: payload.TOTAL_AMOUNT,
+    TOTAL_CURRENCY: payload.TOTAL_CURRENCY,
+    ADULT_PASSENGER_ID_1: payload.ADULT_PASSENGER_ID_1,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(BASE_URL + "/booking/create", requestOptions)
     .then((response) => response.text())
     .then((result) => callBack(JSON.parse(result)))
     .catch((error) => console.log("error", error));

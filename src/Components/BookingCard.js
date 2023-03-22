@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { AdCards } from "../Utils/Flight/Image";
 import leftRight from "../assets/Frontcard/left-right.png";
 import flightBanner from "../assets/Frontcard/flightbanner.jpg";
+import MemberCount from "./Elements/MemberCount";
 
 const initialData = {
   origin: "",
@@ -25,7 +26,7 @@ const initialData = {
   returnDate: "",
   cabin_class: "economy",
 };
-function BookingCard() {
+function BookingCard({ trans }) {
   const Navigate = useNavigate();
   const dropRefFrom = useRef();
   const dropRefTo = useRef();
@@ -36,6 +37,10 @@ function BookingCard() {
   const [oneWay, setOneWay] = useState(true);
   const [cabinClass, setCabinClass] = useState("economy");
   const [formData, setFormData] = useState(initialData);
+  const [membersCount, setMembersCount] = useState({
+    adult: 1,
+    child: 0,
+  });
 
   window.onclick = (e) => {
     console.log(e.target.className);
@@ -61,28 +66,48 @@ function BookingCard() {
       "<<<< destinationfield"
     );
     // return null;
+
     if (originField?.iata_code?.trim() == "") {
       return null;
     }
     if (destinationField?.iata_code?.trim() == "") return null;
     if (date1?.trim() == "") return null;
-    // if(destinationField.trim()=="")
+
     Navigate(
-      `/flights/${originField.iata_code}/${destinationField.iata_code}/${date1}/${cabinClass}`
+      `/flights/${originField.iata_code}/${destinationField.iata_code}/${date1}/${cabinClass}/${membersCount.adult}/${membersCount.child}`
     );
 
     // PostOffer
   };
   console.log(formData, "<<< this is formData");
+  const handleMemberCount = (type, sign) => {
+    if (sign == "+") {
+      if (type == "adult") {
+        setMembersCount({ ...membersCount, adult: membersCount.adult + 1 });
+      }
+      if (type == "child") {
+        setMembersCount({ ...membersCount, child: membersCount.child + 1 });
+      }
+    }
+    if (sign == "-") {
+      if (type == "adult" && membersCount.adult > 1) {
+        setMembersCount({ ...membersCount, adult: membersCount.adult - 1 });
+      }
+      if (type == "child" && membersCount.child > 0) {
+        setMembersCount({ ...membersCount, child: membersCount.child - 1 });
+      }
+    }
+  };
 
   return (
     <div>
       <div style={{ position: "relative" }}>
         <img src={flightBanner} width="100%" />
         <div className="banner-tex">
-          Enjoy The Experience Of <br />
-          <span style={{ color: "aqua" }}> Flights</span> <br /> "In Your
-          Budget"
+          {trans("heading1")}
+          <br />
+          <span style={{ color: "aqua" }}> Flights</span> <br /> "
+          {trans("heading2")}"
         </div>
       </div>
       <div></div>
@@ -92,16 +117,22 @@ function BookingCard() {
           <div className="wrapper" style={{}}>
             <div className="first-box">
               <Button
-                variant={oneWay ? "contained" : "outlined"}
-                onClick={() => setOneWay(!oneWay)}
+                variant={oneWay == true ? "contained" : "outlined"}
+                onClick={() => setOneWay(true)}
               >
-                One Way
+                {trans("oneway")}
               </Button>
               <Button
-                variant={!oneWay ? "contained" : "outlined"}
-                onClick={() => setOneWay(!oneWay)}
+                variant={oneWay == false ? "contained" : "outlined"}
+                onClick={() => setOneWay(false)}
               >
                 Round Trip
+              </Button>
+              <Button
+                variant={oneWay == null ? "contained" : "outlined"}
+                onClick={() => setOneWay(null)}
+              >
+                {trans("multicity")}
               </Button>
             </div>
 
@@ -136,6 +167,7 @@ function BookingCard() {
                   value={formData.returnDate}
                 />
               )}
+              <div>1 Adult 5 Children</div>
               <div className="second-box-end-search">
                 <Button
                   variant="contained"
@@ -167,43 +199,61 @@ function BookingCard() {
         <div className="top-buttons">
           <Button
             className="waybutt"
-            variant={!oneWay ? "outlined" : "contained"}
+            variant={oneWay == true ? "contained" : "outlined"}
             onClick={() => setOneWay(true)}
           >
             One Way
           </Button>
           <Button
             className="waybutt"
-            variant={oneWay ? "outlined" : "contained"}
+            variant={oneWay == false ? "contained" : "outlined"}
             onClick={() => setOneWay(false)}
           >
             Round Trip
           </Button>
+          <Button
+            className="waybutt"
+            variant={oneWay == null ? "contained" : "outlined"}
+            onClick={() => setOneWay(null)}
+          >
+            Multi city
+          </Button>
           <SelectClass setCabinClass={setCabinClass} cabinClass={cabinClass} />
         </div>
-        <div className="booking-form">
-          {" "}
-          <CustomSearchBox
-            selectedValue={originField}
-            placeholder="Origin"
-            setSelectedValue={setOriginField}
-          />
-          <img src={leftRight} width="40px" />
-          <CustomSearchBox
-            placeholder="Destination"
-            selectedValue={destinationField}
-            setSelectedValue={setDestinationField}
-          />
-          <DatePickerComponent date={date1} setDate={setDate1} />
-          {!oneWay && <DatePickerComponent date={date2} setDate={setDate2} />}
-        </div>
-        <Button
-          variant="contained"
-          className="searchButt"
-          onClick={handleSubmit}
-        >
-          Search
-        </Button>
+        {oneWay != null && (
+          <>
+            {" "}
+            <div className="booking-form">
+              {" "}
+              <CustomSearchBox
+                selectedValue={originField}
+                placeholder="Origin"
+                setSelectedValue={setOriginField}
+              />
+              <img src={leftRight} width="40px" />
+              <CustomSearchBox
+                placeholder="Destination"
+                selectedValue={destinationField}
+                setSelectedValue={setDestinationField}
+              />
+              <DatePickerComponent date={date1} setDate={setDate1} />
+              {!oneWay && (
+                <DatePickerComponent date={date2} setDate={setDate2} />
+              )}
+              <MemberCount
+                membersCount={membersCount}
+                handleMemberCount={handleMemberCount}
+              />
+            </div>
+            <Button
+              variant="contained"
+              className="searchButt"
+              onClick={handleSubmit}
+            >
+              Search
+            </Button>{" "}
+          </>
+        )}
       </div>
       <Card>
         <div className=" support-card">

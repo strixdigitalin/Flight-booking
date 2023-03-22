@@ -191,7 +191,7 @@ export const CustomSearchBox = ({
   };
   window.addEventListener("click", function (event) {
     let { className } = event.target;
-    if (className != "dropdownoption") {
+    if (className != "dropdownoption" && dropRef.current.style.display) {
       console.log("this i not ", className);
       dropRef.current.style.display = "none";
     }

@@ -18,9 +18,16 @@ import EnquiryData from "./EnquiryData";
 import ShowLoader from "../../Components/Elements/ShowLoader";
 import Airport from "../../Utils/Flight/Airports.json";
 
-function FlightOffer() {
-  const { origin, destination, departure_date, cabin_class, adult, child } =
-    useParams();
+function FlightByOfferId() {
+  const {
+    origin,
+    destination,
+    departure_date,
+    cabin_class,
+    adult,
+    child,
+    offerId,
+  } = useParams();
   const [showLoader, setshowLoader] = useState(false);
   const [errorData, setErrorData] = useState({
     origin: false,
@@ -70,16 +77,22 @@ function FlightOffer() {
       return setErrorData({ ...errorData, departure_date: true });
     if (formData.cabin_class?.trim() == "")
       return setErrorData({ ...errorData, cabin_class: true });
-    PostOffer({ ...formData, passengers: members }, (res) => {
-      console.log(res.data.data, "<<<this is response");
-      if (res.success) {
-        setshowLoader(false);
-        GetOffersById(res.data.data.id, (offerRes) => {
-          console.log(offerRes, "<<< this is offers");
-          setOffersData(offerRes?.data?.data);
-        });
-      }
+    GetOffersById(offerId, (offerRes) => {
+      console.log(offerRes, "<<< this is offers");
+
+      setshowLoader(false);
+      setOffersData(offerRes?.data?.data);
     });
+    //   PostOffer({ ...formData, passengers: members }, (res) => {
+    //     console.log(res.data.data, "<<<this is response");
+    //     if (res.success) {
+    //       setshowLoader(false);
+    //       GetOffersById(res.data.data.id, (offerRes) => {
+    //         console.log(offerRes, "<<< this is offers");
+    //         setOffersData(offerRes?.data?.data);
+    //       });
+    //     }
+    //   });
   };
   console.log(OffersData, "<<<this is response");
 
@@ -97,10 +110,10 @@ function FlightOffer() {
         toggle={showAlert.toggle}
       />
       {/* <EnquiryData
-        from={origin}
-        to={destination}
-        departure_date={departure_date}
-      /> */}
+          from={origin}
+          to={destination}
+          departure_date={departure_date}
+        /> */}
       <div className="fligh-detail-cover">
         <div className="flight-detail-filter">
           <Autocomplete
@@ -192,12 +205,12 @@ function FlightOffer() {
             Submit
           </Button>
           {/* <img
-            src={AdCards.flight_ad}
-            // width="100%"
-            // height="100%"
-            className="filter-ad"
-            // style={{ objectFit: "contain" }}
-          /> */}
+              src={AdCards.flight_ad}
+              // width="100%"
+              // height="100%"
+              className="filter-ad"
+              // style={{ objectFit: "contain" }}
+            /> */}
         </div>
         <div className="flight-detail-right-cover">
           <div className="fs23 text-500">All Available Flights</div>
@@ -229,4 +242,4 @@ export const ImageText = ({ src, text }) => {
   );
 };
 
-export default FlightOffer;
+export default FlightByOfferId;
