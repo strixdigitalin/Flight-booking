@@ -29,6 +29,7 @@ import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import { useEffect, useState } from "react";
 import PaymentSuccess, { PaymentFailed } from "./Pages/Payments/PaymentSuccess";
+import DuffelPayment from "./Pages/Payments/CreatePayment";
 
 // ------------
 
@@ -132,6 +133,15 @@ function App() {
               </>
             }
           />
+          {/* <Route
+            path="/payment"
+            element={
+              <>
+                <Header />
+                <DuffelPayment />
+              </>
+            }
+          /> */}
           <Route
             path="/success/:orderId"
             element={
