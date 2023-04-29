@@ -10,3 +10,8 @@ export const AdCards = {
   savemoney: require("../../assets/FlightDetail/savemoney.png"),
   pound: require("../../assets/FlightDetail/pound.png"),
 };
+export const AdBanner = {
+  customerSupport1: require("../../assets/ads/customersupport.png"),
+  customerSupport2: require("../../assets/ads/customersupport2.png"),
+  customerSupport3: require("../../assets/ads/customersupport2.jpeg"),
+};

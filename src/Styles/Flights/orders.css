@@ -1,0 +1,10 @@
+.showorders-cover{
+    width: 60%;
+    margin: auto;
+    margin-top: 3rem;
+}
+.orderpage-cover{
+    display: flex;
+    width: 80%;
+    margin: auto;
+}

@@ -18,6 +18,8 @@ import { AdCards } from "../Utils/Flight/Image";
 import leftRight from "../assets/Frontcard/left-right.png";
 import flightBanner from "../assets/Frontcard/flightbanner.jpg";
 import MemberCount from "./Elements/MemberCount";
+import SupportComponent from "./Elements/SupportComponent";
+import MultiCity from "../Pages/Booking/MultiCity";
 
 const initialData = {
   origin: "",
@@ -72,9 +74,38 @@ function BookingCard({ trans }) {
     }
     if (destinationField?.iata_code?.trim() == "") return null;
     if (date1?.trim() == "") return null;
+    let slices = [];
+    if (oneWay == true) {
+      slices = [
+        {
+          origin: originField.iata_code,
+          destination: destinationField.iata_code,
+          departure_date: date1,
+        },
+      ];
+    }
+    if (oneWay == false) {
+      slices = [
+        {
+          origin: originField.iata_code,
+          destination: destinationField.iata_code,
+          departure_date: date1,
+        },
+        {
+          destination: originField.iata_code,
+          origin: destinationField.iata_code,
+          departure_date: date2,
+        },
+      ];
+    }
 
     Navigate(
-      `/flights/${originField.iata_code}/${destinationField.iata_code}/${date1}/${cabinClass}/${membersCount.adult}/${membersCount.child}`
+      `/flights2/${JSON.stringify({
+        slices,
+        oneWay,
+        cabinClass,
+        membersCount,
+      })}`
     );
 
     // PostOffer
@@ -182,15 +213,6 @@ function BookingCard({ trans }) {
                 </Button>
               </div>
             </div>
-            {/* <div className="second-box-end-search">
-          <Button
-            variant="contained"
-            style={{ width: "20rem", height: "3rem", borderRadius: "40px" }}
-            onClick={handleSubmit}
-          >
-            Search
-          </Button>
-        </div> */}
           </div>
         </>
       )}
@@ -254,59 +276,10 @@ function BookingCard({ trans }) {
             </Button>{" "}
           </>
         )}
+        {oneWay == null && <MultiCity cabinClass={cabinClass} />}
       </div>
-      <Card>
-        <div className=" support-card">
-          <Grid container alignItems="center">
-            <Grid item md={4} textAlign="center" alignItems="center">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography fontWeight="bold" fontSize={25}>
-                  Live 24/7 <br />
-                  Support
-                </Typography>
-                <img src={AdCards.support} width="100px" height="100px" />
-              </div>
-            </Grid>
-            <Grid item md={4} textAlign="center" alignItems="center">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography fontWeight="bold" fontSize={25}>
-                  Save Money
-                </Typography>
-                <img src={AdCards.pound} width="100px" height="100px" />
-              </div>
-            </Grid>
-            <Grid item md={4} textAlign="center">
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  justifyContent: "center",
-                }}
-              >
-                <Typography fontWeight="bold" fontSize={25}>
-                  Free Cancelation <br /> within 24 hours
-                </Typography>
-                <img src={AdCards.savemoney} width="100px" height="100px" />
-              </div>
-            </Grid>
-          </Grid>
-        </div>
-      </Card>
+
+      <SupportComponent />
 
       {/* <div className="offer-container">
         <div className="home-offers offer-outer">

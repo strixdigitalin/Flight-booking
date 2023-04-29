@@ -1,5 +1,5 @@
 import { DUFFEL_AUTH_TOKEN, DUFFEL_VERSION } from ".";
-// export const BASE_URL = "http://localhost:5000";
+// export const BASE_URL = "http://localhost:5001";
 // export const BASE_URL = "http://100.26.10.214:5000";
 export const BASE_URL = "https://flight-o1qw.onrender.com";
 export const parse = (data) => JSON.parse(data);
@@ -84,6 +84,32 @@ export const PostOffer = (payload, callBack) => {
     DESTINATION: destination,
     DATE: departure_date,
     CABIN: cabin_class,
+  });
+
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: raw,
+    redirect: "follow",
+  };
+
+  fetch(BASE_URL + "/offer/search", requestOptions)
+    .then((response) => response.text())
+    .then((result) => callBack(JSON.parse(result)))
+    .catch((error) => console.log("error", error));
+};
+export const PostOffer2 = (payload, callBack) => {
+  const { cabinClass, passengers, slices } = payload;
+  console.log(passengers, "<<<< thisispassengers");
+  // return null;
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    PASSENGERS: passengers,
+    slices,
+
+    CABIN: cabinClass,
   });
 
   var requestOptions = {

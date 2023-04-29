@@ -1,4 +1,10 @@
-import { MenuItem, Select, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { getAirPorts } from "../../Utils/API/Airports";
 import DefVariables from "../../Utils/DefVariables";
@@ -62,7 +68,7 @@ function AutoCompleteInputFrom({
           onChange={onTextChange}
           value={inputValue}
         />
-        <div className="auto-drop" ref={dropRefFrom}>
+        <div className="auto-drop" ref={dropRefFrom} style={{}}>
           {FilteredValues.map((item, key) => {
             return (
               <div
@@ -174,17 +180,19 @@ export const CustomSearchBox = ({
   // const [selectedValue, setSelectedValue] = useState({});
   const [inputValue, setInputValue] = useState("");
   const [dropDownValue, setDropDownValue] = useState([]);
+  const [showLoader, setShowLoader] = useState(false);
   const dropRef = useRef(0);
   // const [showDrop, setshowDrop] = useState(second)
   const onTextChange = (e) => {
     dropRef.current.style.display = "block";
-
+    setShowLoader(true);
     const text = e.target.value;
     setInputValue(text);
     // setInputValue2(text)
     getAirPorts(text, (res) => {
       console.log(res, "<<< this is input airports ");
       if (res.success) {
+        setShowLoader(false);
         setDropDownValue(res.data.data);
       }
     });
@@ -213,7 +221,103 @@ export const CustomSearchBox = ({
         value={inputValue}
         className="input-boxform"
       /> */}
-      <div className="dropdownoption" ref={dropRef}>
+      <div className="dropdownoption" ref={dropRef} style={{}}>
+        {showLoader && (
+          <div
+            style={{
+              width: "100%",
+              textAlign: "center",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        )}
+        {dropDownValue.map((item, key) => {
+          return (
+            <Typography
+              className="singlecity"
+              key={key}
+              onClick={() => {
+                setSelectedValue({
+                  name: item.name,
+                  iata_code: item.iata_code,
+                });
+                setInputValue(
+                  "(" + item.iata_code + ") " + item.city_name
+                    ? item.city_name
+                    : item.name
+                );
+              }}
+            >
+              {item.iata_code} {item.name}
+            </Typography>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+export const MultiCityCustomSearchBox = ({
+  selectedValue,
+  setSelectedValue,
+  placeholder,
+}) => {
+  // const [selectedValue, setSelectedValue] = useState({});
+  const [inputValue, setInputValue] = useState("");
+  const [dropDownValue, setDropDownValue] = useState([]);
+  const [showLoading, setShowLoading] = useState(false);
+
+  const dropRef = useRef(0);
+  // const [showDrop, setshowDrop] = useState(second)
+  const onTextChange = (e) => {
+    dropRef.current.style.display = "block";
+    setShowLoading(true);
+    const text = e.target.value;
+    setInputValue(text);
+    // setInputValue2(text)
+    getAirPorts(text, (res) => {
+      console.log(res, "<<< this is input airports ");
+      if (res.success) {
+        setShowLoading(false);
+        setDropDownValue(res.data.data);
+      }
+    });
+  };
+  window.addEventListener("click", function (event) {
+    let { className } = event.target;
+    if (className != "dropdownoption" && dropRef.current.style.display) {
+      console.log("this i not ", className);
+      dropRef.current.style.display = "none";
+    }
+  });
+  console.log(inputValue, " this is input value  ");
+  return (
+    <div className="auto-inputbox">
+      <input
+        onChange={onTextChange}
+        value={inputValue}
+        placeholder={placeholder}
+        className="input-boxform"
+      />
+      {/* <TextField
+        id="outlined-basic"
+        label="Outlined"
+        variant="outlined"
+        onChange={onTextChange}
+        value={inputValue}
+        className="input-boxform"
+      /> */}
+      <div className="dropdownoption" ref={dropRef} style={{}}>
+        {showLoading && (
+          <div
+            style={{
+              width: "100%",
+              textAlign: "center",
+            }}
+          >
+            <CircularProgress />
+          </div>
+        )}
         {dropDownValue.map((item, key) => {
           return (
             <Typography
@@ -241,6 +345,21 @@ export const CustomSearchBox = ({
 };
 
 export const DatePickerComponent = ({ date, setDate }) => {
+  return (
+    <div className="coverdate">
+      <input
+        type="date"
+        placeholder="Date"
+        value={date}
+        onChange={(e) => {
+          console.log(e.target.value, " <<<< this is etarget value");
+          setDate(e.target.value);
+        }}
+      />
+    </div>
+  );
+};
+export const MultiCityDatePickerComponent = ({ date, setDate }) => {
   return (
     <div className="coverdate">
       <input

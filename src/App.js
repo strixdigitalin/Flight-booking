@@ -12,9 +12,10 @@ import "./Styles/Flights/flightcomponent.css";
 import "./Styles/Flights/bookingcard.css";
 import "./Styles/Flights/footer.css";
 import "./Styles/Flights/payment.css";
+import "./Styles/Flights/orders.css";
 import "./Styles/Flights/flightdetail.css";
 import "./Styles/Login/login.css";
-import "./Styles/Components/component.css";
+import "./Styles/Login/login.css";
 
 // ------------------------------
 import Header, { Header2 } from "./Components/Header";
@@ -29,11 +30,15 @@ import i18n from "i18next";
 import { useTranslation, initReactI18next } from "react-i18next";
 import { useEffect, useState } from "react";
 import PaymentSuccess, { PaymentFailed } from "./Pages/Payments/PaymentSuccess";
-
+import DuffelPayment from "./Pages/Payments/CreatePayment";
+import "@duffel/components/dist/CardPayment.min.css";
+import FlightOffer2 from "./Pages/Flights/index2";
+import { Preview } from "@mui/icons-material";
+import PreviousOrders from "./Pages/Orders/PreviousOrders";
 // ------------
 
 //
-let language = "es";
+let language = "en";
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
@@ -106,11 +111,20 @@ function App() {
           />
           <Route path="/login" element={<LoginPage />} />
           <Route
-            path="/flights/:origin/:destination/:departure_date/:cabin_class/:adult/:child"
+            path="/flights/:origin/:destination/:departure_date/:cabin_class/:adult/:child/:stringify"
             element={
               <>
                 <Header />
                 <Flights />
+              </>
+            }
+          />
+          <Route
+            path="/flights2/:flightdata"
+            element={
+              <>
+                <Header />
+                <FlightOffer2 />
               </>
             }
           />
@@ -124,6 +138,15 @@ function App() {
             }
           />
           <Route
+            path="/orders"
+            element={
+              <>
+                <Header />
+                <PreviousOrders />
+              </>
+            }
+          />
+          <Route
             path="/booking/:id"
             element={
               <>
@@ -132,6 +155,15 @@ function App() {
               </>
             }
           />
+          {/* <Route
+            path="/payment"
+            element={
+              <>
+                <Header />
+                <DuffelPayment />
+              </>
+            }
+          /> */}
           <Route
             path="/success/:orderId"
             element={
