@@ -15,6 +15,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  Snackbar,
   TextField,
   Typography,
 } from "@mui/material";
@@ -26,7 +27,14 @@ import {
   getMonths,
   getYears,
 } from "../../Utils/Flight/CommonFunctions";
-import { StripePayment } from "../../Utils/API/PaymentAPI";
+import {
+  StripePayment,
+  confirmPayment,
+  createOrderAPI,
+  createPaymentIntent,
+} from "../../Utils/API/PaymentAPI";
+import DuffelPayment from "../Payments/CreatePayment";
+import { SendConfirmEmail } from "../../Utils/API/UserAPI";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -35,18 +43,62 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
+let initialState = {
+  email: "",
+  firstName: "",
+  middleName: "",
+  lastName: "",
+  gender: "",
+  phone_number: "",
+  born_on: "",
+  id: "",
+};
+let initialPayment = {
+  cardHolderFullName: "",
+  cardNumber: "",
+  expiration: "",
+  cardVerificationNumber: "",
+  address: "",
+  city: "",
+  country: "",
+  pincode: "",
+};
+
 function Booking() {
   const { id } = useParams();
   const [showSuccessMessage, setShowSuccessMessage] = useState(null);
   const [orderData, setOrderData] = useState({});
   const [getorderConfirmData, setGetorderConfirmData] = useState(null);
-
+  const [userData, setUserData] = useState([]);
+  const [email, setEmail] = useState("");
+  const [paymentDetail, setPaymentDetail] = useState(initialPayment);
+  const [paymentIntemnt, setPaymentIntemnt] = useState({});
+  const [showError, setShowError] = useState(null);
   useEffect(() => {
+    setShowError("hekjk");
     getOnlyOfferbyOfferId(id, (res) => {
-      console.log(res.data.data, "<<<flight data");
+      console.log(res.data.data, "<<<flightdata");
       setOrderData(res.data.data);
+      let tempuserD = [];
+      res.data.data.passengers.map((item) => {
+        tempuserD.push({ ...initialState, id: item?.id });
+      });
+      setUserData(tempuserD);
+      createPaymentIntent(
+        {
+          currency: res.data.data.base_currency,
+          amount: res.data.data?.base_amount,
+        },
+        (res) => {
+          console.log(res, "paymentintent");
+          if (res.success) {
+            setPaymentIntemnt(res.data.data);
+          }
+        }
+      );
     });
   }, []);
+
   const cancelORder = () => {
     cancelOrder(getorderConfirmData.id, (res) => {
       console.log(res, "<<< resorder");
@@ -60,33 +112,84 @@ function Booking() {
       }, 5000);
     });
   };
-  const confirmOrder = () => {
-    console.log(orderData?.passengers[0]);
-    // StripePayment();
-    StripePayment("64185544f427088880e73e02", (res) => {
-      console.log(res, "<<<<response");
+
+  const handleUser = (e, index) => {
+    let { name, value } = e.target;
+    let temp = userData;
+    temp[index][name] = value;
+
+    setUserData(temp);
+  };
+
+  const handlePaymentDetail = (e) => {
+    let { name, value } = e.target;
+    setPaymentDetail({ ...paymentDetail, [name]: value });
+  };
+  const handleSubmit = () => {
+    console.log(userData, "<<<<thisisuserdata");
+  };
+  console.log(userData, orderData, "<<< this is orderdata");
+  const successfulPaymentHandlerFn = () => {
+    console.log("payment success");
+    alert("Success payment");
+    confirmPayment(paymentIntemnt?.id, (res) => {
+      // phone_number: phone_number,
+      // email: email,
+      // born_on: born_on,
+      // title: gender == "m" ? "mr" : "mrs",
+      // gender: gender,
+      // family_name: lastName,
+      // given_name: firstName + middleName,
+      // id: ADULT_PASSENGER_ID_1,
+      let userPayload = userData.map((item) => ({
+        given_name: item.firstName + item.middleName,
+        family_name: item?.lastName,
+        id: item.id,
+        title: item?.gender == "m" ? "mr" : "mrs",
+        gender: item?.gender,
+        email,
+        phone_number: item?.phone_number,
+        born_on: item?.born_on,
+      }));
+
       if (res.success) {
-        window.location.href = res.url;
+        createOrderAPI({ userData: userPayload, orderData, email }, (res) => {
+          if (res.success) {
+            SendConfirmEmail(email, (res) => {
+              console.log("emeila sent");
+            });
+            alert("Booking successful");
+          } else {
+            setShowError(res.error.errors[0].message);
+          }
+        });
       }
     });
-    // return null;
-    createOrder(
-      {
-        OFFER_ID: id,
-        TOTAL_AMOUNT: orderData.total_amount,
-        TOTAL_CURRENCY: orderData.total_currency,
-        ADULT_PASSENGER_ID_1: orderData?.passengers[0]?.id,
-      },
-      (res) => {
-        console.log(res, "<< this is res");
-        alert("Order Successfully Created");
-        setGetorderConfirmData(res.data.data);
-      }
-    );
+
+    // Show 'successful payment' page and confirm Duffel PaymentIntent
+  };
+  const errorPaymentHandlerFn = (error) => {
+    console.log(error, "<<<this is error");
+    // Show error page
   };
 
   return (
     <div className="page-cover">
+      {showError && (
+        <Snackbar
+          severity="error"
+          open={showError != null ? true : false}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          autoHideDuration={20000}
+          onClose={() => setShowError(null)}
+          // TransitionComponent={state.Transition}
+          message={showError}
+          // key={state.Transition.name}
+        />
+      )}
       <div className="cancle-tag">
         REVIEW & BOOK WITH CONFIDENCE – YOU CAN CANCEL FOR A FEE WITHIN THE NEXT
         24 HOURS!
@@ -127,7 +230,7 @@ function Booking() {
                             {getBookingDate(segment?.arriving_at).time}{" "}
                           </Typography>
                           <Typography fontSize={13}>
-                            Depart: {segment?.destination?.name} (
+                            Arrived: {segment?.destination?.name} (
                             {segment?.destination?.iata_code})
                           </Typography>
                         </div>
@@ -155,91 +258,7 @@ function Booking() {
               display: "flex",
               justifyContent: "center",
             }}
-          >
-            {getorderConfirmData == null && (
-              <Button
-                variant="contained"
-                color="success"
-                onClick={confirmOrder}
-                style={{ width: "100%", padding: "12px", marginTop: "2rem" }}
-              >
-                Confirm Booking
-              </Button>
-            )}
-            {getorderConfirmData != null && (
-              <div className="booking-way-detail cardbg">
-                <Grid
-                  container
-                  spacing={1}
-                  // columnSpacing={3  }
-                  mt={1}
-                  style={{ alignItems: "center" }}
-                >
-                  <Grid
-                    mt={1}
-                    container
-                    spacing={2}
-                    columnSpacing={3}
-                    style={{ alignItems: "center" }}
-                  >
-                    <Grid item md={4} textAlign="right">
-                      <Typography fontWeight={"bold"}>*Order Id</Typography>
-                    </Grid>
-                    <Grid item md={4}>
-                      {getorderConfirmData?.id}
-                    </Grid>
-                    <Grid item md={4}></Grid>
-                  </Grid>
-                  <Grid
-                    mt={1}
-                    container
-                    spacing={2}
-                    columnSpacing={3}
-                    style={{ alignItems: "center" }}
-                  >
-                    <Grid item md={4} textAlign="right">
-                      <Typography fontWeight={"bold"}>Amount</Typography>
-                    </Grid>
-                    <Grid item md={4}>
-                      {getorderConfirmData?.base_amount}
-                    </Grid>
-                    <Grid item md={4}></Grid>
-                  </Grid>
-                  <Grid
-                    mt={1}
-                    container
-                    spacing={2}
-                    columnSpacing={3}
-                    style={{ alignItems: "center" }}
-                  >
-                    <Grid item md={4} textAlign="right">
-                      <Typography fontWeight={"bold"}>Currency</Typography>
-                    </Grid>
-                    <Grid item md={4}>
-                      {getorderConfirmData?.base_currency}
-                    </Grid>
-                    <Grid item md={4}></Grid>
-                  </Grid>
-                  <Grid
-                    mt={1}
-                    container
-                    spacing={2}
-                    columnSpacing={3}
-                    style={{ alignItems: "center" }}
-                  >
-                    <Grid item md={4} textAlign="right">
-                      <Typography fontWeight={"bold"}>Created At</Typography>
-                    </Grid>
-                    <Grid item md={4}>
-                      {getDateTimeFun(getorderConfirmData?.created_at).date}{" "}
-                      {getDateTimeFun(getorderConfirmData?.created_at).time}{" "}
-                    </Grid>
-                    <Grid item md={4}></Grid>
-                  </Grid>
-                </Grid>
-              </div>
-            )}
-          </div>
+          ></div>
           <Typography variant="h5" fontSize={18} fontWeight={600} mb={1} mt={4}>
             WHERE TO SEND YOUR CONFIRMATION
           </Typography>
@@ -247,6 +266,9 @@ function Booking() {
             <TextField
               id="standard-basic"
               label="Email"
+              name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               variant="standard"
               style={{ width: "400px", backgroundColor: "white" }}
             />
@@ -262,95 +284,97 @@ function Booking() {
             </span>
           </Typography>
           <Card className="booking-passenger-detail-card cardbg">
-            <Grid container spacing={2}>
-              <Grid item md={4}>
-                <TextField
-                  fullWidth
-                  id="standard-basic"
-                  label="First Name"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item md={4}>
-                <TextField
-                  fullWidth
-                  id="standard-basic"
-                  label="Middle Name"
-                  variant="standard"
-                />
-              </Grid>
-              <Grid item md={4}>
-                <TextField
-                  fullWidth
-                  id="standard-basic"
-                  label="Last Name"
-                  variant="standard"
-                />
-              </Grid>
+            {userData?.map((item, index) => {
+              return (
+                <div>
+                  <Typography mb={2}>
+                    <span style={{ fontWeight: "bold" }}>
+                      Passenger {index + 1}
+                    </span>
+                  </Typography>
 
-              <Grid item md={3}>
-                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={""}
-                  fullWidth
-                  label="Gender"
-                  // onChange={handleChange}
-                >
-                  <MenuItem value={10}>Male</MenuItem>
-                  <MenuItem value={20}>Female</MenuItem>
-                  <MenuItem value={30}>Other</MenuItem>
-                </Select>
-              </Grid>
-              <Grid item md={3}>
-                <InputLabel id="demo-simple-select-label">Month</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={""}
-                  fullWidth
-                  label="Age"
-                  // onChange={handleChange}
-                >
-                  {getMonths?.map((item, key) => {
-                    return <MenuItem value={item.value}>{item.label}</MenuItem>;
-                  })}
-                </Select>
-              </Grid>
-              <Grid item md={3}>
-                <InputLabel id="demo-simple-select-label">Day</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={""}
-                  fullWidth
-                  label="Age"
-                  // onChange={handleChange}
-                >
-                  {getDates()?.map((item, key) => {
-                    return <MenuItem value={item.value}>{item.label}</MenuItem>;
-                  })}
-                </Select>
-              </Grid>
-              <Grid item md={3}>
-                <InputLabel id="demo-simple-select-label">Year</InputLabel>
-                <Select
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={""}
-                  fullWidth
-                  label="Age"
-                  // onChange={handleChange}
-                >
-                  {getYears()?.map((item, key) => {
-                    return <MenuItem value={item.value}>{item.label}</MenuItem>;
-                  })}
-                </Select>
-              </Grid>
-            </Grid>
+                  <Grid container spacing={2} key={index}>
+                    <Grid item md={4}>
+                      <TextField
+                        fullWidth
+                        id="standard-basic"
+                        name="firstName"
+                        value={userData?.firstName}
+                        onChange={(e) => handleUser(e, index)}
+                        label="First Name"
+                        variant="standard"
+                      />
+                    </Grid>
+                    <Grid item md={4}>
+                      <TextField
+                        fullWidth
+                        id="standard-basic"
+                        label="Middle Name"
+                        variant="standard"
+                        name="middleName"
+                        value={userData?.middleName}
+                        onChange={(e) => handleUser(e, index)}
+                      />
+                    </Grid>
+                    <Grid item md={4}>
+                      <TextField
+                        fullWidth
+                        id="standard-basic"
+                        label="Last Name"
+                        variant="standard"
+                        name="lastName"
+                        value={userData?.lastName}
+                        onChange={(e) => handleUser(e, index)}
+                      />
+                    </Grid>
+
+                    <Grid item md={4}>
+                      <TextField
+                        fullWidth
+                        id="standard-basic"
+                        label="Phone Number"
+                        variant="standard"
+                        name="phone_number"
+                        value={userData?.phone_number}
+                        onChange={(e) => handleUser(e, index)}
+                      />
+                    </Grid>
+                    <Grid item md={4}>
+                      <InputLabel id="demo-simple-select-label">
+                        Gender
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        fullWidth
+                        label="Gender"
+                        name="gender"
+                        value={userData?.gender}
+                        onChange={(e) => handleUser(e, index)}
+                        // onChange={handleChange}
+                      >
+                        <MenuItem value={"m"}>Male</MenuItem>
+                        <MenuItem value={"f"}>Female</MenuItem>
+                      </Select>
+                    </Grid>
+                    <Grid item md={4}>
+                      <InputLabel id="demo-simple-select-label">
+                        Date Of Birth
+                      </InputLabel>
+                      <input
+                        type="date"
+                        name="born_on"
+                        value={userData.born_on}
+                        onChange={(e) => handleUser(e, index)}
+                        style={{ height: "3.1rem" }}
+                      />
+                    </Grid>
+                  </Grid>
+                </div>
+              );
+            })}
           </Card>
-          <Card className="booking-baggage cardbg">
+          {/* <Card className="booking-baggage cardbg">
             <div className="baggage-upper">
               <Typography variant="h4" align="center" color="white">
                 Baggage
@@ -380,7 +404,7 @@ function Booking() {
                 <MenuItem value={2}>1 X Checked +($215) </MenuItem>
               </Select>
             </div>
-          </Card>
+          </Card> */}
           {/* <Card className="booking-baggage cardbg">
             <div
               style={{
@@ -422,10 +446,10 @@ function Booking() {
               </Grid>
             </Grid>
           </Card> */}
-          <Typography variant="h5" mb={1} mt={4} fontSize={18} fontWeight={600}>
+          {/* <Typography variant="h5" mb={1} mt={4} fontSize={18} fontWeight={600}>
             BILLING INFORMATION
-          </Typography>
-          <Card style={{}} className="cardbg">
+          </Typography> */}
+          {/* <Card style={{}} className="cardbg">
             <div className="billing-info-card cardbg">
               <Grid
                 container
@@ -554,7 +578,14 @@ function Booking() {
                 <Grid item md={4}></Grid>
               </Grid>
             </div>
-          </Card>
+          </Card> */}
+          {paymentIntemnt?.client_token && (
+            <DuffelPayment
+              token={paymentIntemnt?.client_token}
+              successfulPaymentHandlerFn={successfulPaymentHandlerFn}
+              errorPaymentHandlerFn={errorPaymentHandlerFn}
+            />
+          )}
           <div
             style={{
               width: "100%",
@@ -563,7 +594,9 @@ function Booking() {
               marginTop: "20px",
             }}
           >
-            <Button variant="contained">Book Now</Button>
+            <Button variant="contained" onClick={handleSubmit}>
+              Book Now
+            </Button>
           </div>
         </Grid>
 

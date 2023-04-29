@@ -1,8 +1,15 @@
 import React from "react";
 import "../Styles/Header.css";
 // import logo from "../assets/logo-banner/logo.jpeg";
-import { Button, Grid, InputLabel, MenuItem, Select } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import {
+  Button,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
 import { ThemeColor } from "../Utils/Flight/Colors";
 import { AdCards, FlightImages } from "../Utils/Flight/Image";
 import NavbarItems from "./NavbarItems";
@@ -15,6 +22,7 @@ function Header() {
   const mybiz = window.location.origin + "/mybiz.png";
   const travellug = window.location.origin + "/travellug.png";
   const loginorcreate = window.location.origin + "/loginorcreate.png";
+
   return (
     <div className="bgTheme stickyHead">
       <div className="header-main">
@@ -32,11 +40,31 @@ function Header() {
               // height="38"
             />
           </Grid>
-          <Grid item md={5}>
+          <Grid item md={4}>
             {/* <NavbarItems /> */}
           </Grid>
           <Grid item md={1} style={{}}>
             {/* <InputLabel id="demo-simple-select-label">Language</InputLabel> */}
+
+            <Typography textAlign="left">
+              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+                Home
+              </Link>
+            </Typography>
+          </Grid>
+          <Grid item md={1} style={{}}>
+            {/* <InputLabel id="demo-simple-select-label">Language</InputLabel> */}
+
+            <Typography textAlign="left">
+              <Link
+                to="/orders"
+                style={{ textDecoration: "none", color: "white" }}
+              >
+                Your Orders
+              </Link>
+            </Typography>
+          </Grid>
+          {/* <Grid item md={1} style={{}}>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
@@ -47,12 +75,12 @@ function Header() {
             >
               <MenuItem value={10}>English</MenuItem>
               <MenuItem value={20}>Spanish</MenuItem>
-              {/* <MenuItem value={30}>Other</MenuItem> */}
             </Select>
-          </Grid>
+          </Grid> */}
+
           <Grid
             item
-            md={4}
+            md={3}
             textAlign="end"
             style={{
               backgroundColor: ThemeColor.thirdColor,

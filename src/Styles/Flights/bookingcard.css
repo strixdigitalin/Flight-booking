@@ -49,6 +49,7 @@ position: relative;
     border: 1px solid gray;
     overflow-y: scroll;
     max-height: 20rem;
+    width:100%;
 }
 .singlecity{
     border-bottom: 1px solid gray;

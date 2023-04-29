@@ -2,6 +2,7 @@ import {
   Autocomplete,
   Button,
   FormControl,
+  Grid,
   InputLabel,
   MenuItem,
   Select,
@@ -10,15 +11,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import ShowAlert from "../../Components/Elements/SnackBar";
-import { GetOffersById, PostOffer } from "../../Utils/API/Offler";
-import { AdCards } from "../../Utils/Flight/Image";
+import { GetOffersById, PostOffer, PostOffer2 } from "../../Utils/API/Offler";
+import { AdBanner, AdCards } from "../../Utils/Flight/Image";
 import { FlightShortDetails } from "./Components";
 import cities, { cities2 } from "../../Utils/DefVariables";
 import EnquiryData from "./EnquiryData";
 import ShowLoader from "../../Components/Elements/ShowLoader";
 import Airport from "../../Utils/Flight/Airports.json";
 
-function FlightOffer() {
+function FlightOffer2() {
   const {
     origin,
     destination,
@@ -27,7 +28,10 @@ function FlightOffer() {
     adult,
     child,
     stringify,
+    flightdata,
   } = useParams();
+
+  console.log(flightdata, "<<<< flightdata");
   const [showLoader, setshowLoader] = useState(false);
   const [errorData, setErrorData] = useState({
     origin: false,
@@ -42,12 +46,7 @@ function FlightOffer() {
     severity: "success",
     toggle: false,
   });
-  const [formData, setFormData] = useState({
-    origin,
-    destination,
-    departure_date,
-    cabin_class,
-  });
+  const [formData, setFormData] = useState(JSON.parse(flightdata));
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value, "<<<fields");
@@ -57,13 +56,14 @@ function FlightOffer() {
   useEffect(() => {
     handleSubmit();
   }, []);
+  console.log(formData, "<<<thisisformdata");
   const handleSubmit = () => {
     setshowLoader(true);
     let members = [];
-    for (let index = 0; index < adult; index++) {
+    for (let index = 0; index < formData?.membersCount?.adult; index++) {
       members = [...members, { type: "adult" }];
     }
-    for (let index = 0; index < child; index++) {
+    for (let index = 0; index < formData?.membersCount?.child; index++) {
       members = [...members, { type: "child" }];
     }
     console.log(members, "<<<submit");
@@ -77,7 +77,7 @@ function FlightOffer() {
       return setErrorData({ ...errorData, departure_date: true });
     if (formData.cabin_class?.trim() == "")
       return setErrorData({ ...errorData, cabin_class: true });
-    PostOffer({ ...formData, passengers: members }, (res) => {
+    PostOffer2({ ...formData, passengers: members }, (res) => {
       console.log(res.data.data, "<<<this is response");
       if (res.success) {
         setshowLoader(false);
@@ -104,10 +104,10 @@ function FlightOffer() {
         toggle={showAlert.toggle}
       />
       {/* <EnquiryData
-        from={origin}
-        to={destination}
-        departure_date={departure_date}
-      /> */}
+          from={origin}
+          to={destination}
+          departure_date={departure_date}
+        /> */}
       <div className="fligh-detail-cover">
         <div className="flight-detail-filter">
           <Autocomplete
@@ -199,20 +199,54 @@ function FlightOffer() {
             Submit
           </Button>
           {/* <img
-            src={AdCards.flight_ad}
-            // width="100%"
-            // height="100%"
-            className="filter-ad"
-            // style={{ objectFit: "contain" }}
-          /> */}
+              src={AdCards.flight_ad}
+              // width="100%"
+              // height="100%"
+              className="filter-ad"
+              // style={{ objectFit: "contain" }}
+            /> */}
         </div>
         <div className="flight-detail-right-cover">
           <div className="fs23 text-500">All Available Flights</div>
           {!showLoader &&
-            OffersData?.map((item) => {
+            OffersData?.map((item, index) => {
+              if (
+                index == 2 ||
+                index == 8 ||
+                index == 5 ||
+                index == 9 ||
+                index == 12
+              ) {
+                return (
+                  <>
+                    <Grid container style={{ marginTop: "3rem" }}>
+                      <Grid item>
+                        <img src={AdBanner.customerSupport2} width="100%" />
+                      </Grid>
+                    </Grid>
+                    <FlightShortDetails item={item} />
+                  </>
+                );
+              }
               return <FlightShortDetails item={item} />;
             })}
-          {showLoader && <ShowLoader />}
+          {showLoader && (
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <ShowLoader />
+              <img
+                src={AdBanner.customerSupport1}
+                width="80%"
+                style={{ marginTop: "4rem" }}
+                // height="200px"
+              />
+            </div>
+          )}
         </div>
         <div className=" support-cover">
           <ImageText src={AdCards.support} text="24/7 Live support" />
@@ -236,4 +270,4 @@ export const ImageText = ({ src, text }) => {
   );
 };
 
-export default FlightOffer;
+export default FlightOffer2;

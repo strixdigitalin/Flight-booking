@@ -19,9 +19,11 @@
     ></script>
     <script>
       DuffelComponents.renderCardPaymentComponent('target', {
-        duffelPaymentIntentClientToken: "eyJjbGllbnRfc2VjcmV0IjoicGlfM01zampMR0Nia0tWUmNzWjFFMU5ueURwX3NlY3JldF9DbVh5MUdZVFlVRHMyMTB2bHVxOHpFeFpRIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUo3b1p0R0Nia0tWUmNzWmlTd2tHOTQzMHJvZG1QdDFsRjcyVWx6ajROUUtqQlJKaFNrZzNrMWFwTnhpejF1MWRSSGpOd3U1aGZiYkdRampJRG1QZ212TTAwUERrNHk4b2sifQ==",
-        successfulPaymentHandler: successfulPaymentHandlerFn, // Show 'successful payment' page and confirm Duffel PaymentIntent
-        errorPaymentHandler: errorPaymentHandlerFn // Show error page
+        duffelPaymentIntentClientToken: "eyJjbGllbnRfc2VjcmV0IjoicGlfM01zbEwwR0Nia0tWUmNzWjE3cFpjUFNyX3NlY3JldF80NzZuRXliM2NlVWRURmROTUZySVRxTGxaIiwicHVibGlzaGFibGVfa2V5IjoicGtfbGl2ZV81MUo3b1p0R0Nia0tWUmNzWmlTd2tHOTQzMHJvZG1QdDFsRjcyVWx6ajROUUtqQlJKaFNrZzNrMWFwTnhpejF1MWRSSGpOd3U1aGZiYkdRampJRG1QZ212TTAwUERrNHk4b2sifQ==",
+        successfulPaymentHandler: ()=>{
+            console.log("succcess")
+        }, // Show 'successful payment' page and confirm Duffel PaymentIntent
+        errorPaymentHandler: (e)=>console.log(e) // Show error page
       })
     </script>
   </body>

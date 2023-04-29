@@ -5,9 +5,12 @@ export const getDateTimeFun = (da) => {
   const year = +datetiem.getFullYear();
   const hour = datetiem.getHours();
   const minute = datetiem.getMinutes();
+  console.log(datetiem.toDateString(), "<<<thisisdate");
   return {
-    date: `${date}-${month}-${year}`,
-    time: `${hour}:${minute}`,
+    // date: `${date}-${month}-${year}`,
+    date: datetiem.toDateString(),
+    // time: `${hour}:${minute}`,
+    time: ``,
   };
 };
 // const monthValue=["01,02,03"]
@@ -23,8 +26,10 @@ export const getBookingDate = (da) => {
   const hour = datetiem.getHours();
   const minute = datetiem.getMinutes();
   return {
-    date: `${month}/${date}/${year}`,
-    time: `${hour}:${minute}`,
+    // date: `${date}-${month}-${year}`,
+    date: datetiem.toDateString() + " " + datetiem.toTimeString(),
+    // time: `${hour}:${minute}`,
+    time: ``,
   };
 };
 

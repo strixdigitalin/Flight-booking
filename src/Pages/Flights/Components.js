@@ -14,7 +14,7 @@ export const DestinationCard = ({ heading, value }) => {
   );
 };
 
-export const FlightShortDetails = ({ item }) => {
+export const FlightShortDetails = ({ item  }) => {
   console.log(item, "<<<< thisisitem");
   const slice = item?.slices[0];
   const navigate = useNavigate();
