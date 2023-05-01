@@ -40,7 +40,7 @@ function Header() {
               // height="38"
             />
           </Grid>
-          <Grid item md={4}>
+          <Grid item md={3}>
             {/* <NavbarItems /> */}
           </Grid>
           <Grid item md={1} style={{}}>
@@ -49,6 +49,15 @@ function Header() {
             <Typography textAlign="left">
               <Link to="/" style={{ textDecoration: "none", color: "white" }}>
                 Home
+              </Link>
+            </Typography>
+          </Grid>
+  <Grid item md={1} style={{}}>
+            {/* <InputLabel id="demo-simple-select-label">Language</InputLabel> */}
+
+            <Typography textAlign="left">
+              <Link to="/blog" style={{ textDecoration: "none", color: "white" }}>
+                Blogs
               </Link>
             </Typography>
           </Grid>
