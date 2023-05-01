@@ -13,6 +13,7 @@ import "./Styles/Flights/bookingcard.css";
 import "./Styles/Flights/footer.css";
 import "./Styles/Flights/payment.css";
 import "./Styles/Flights/orders.css";
+import "./Styles/Flights/blog.css";
 import "./Styles/Flights/flightdetail.css";
 import "./Styles/Login/login.css";
 import "./Styles/Login/login.css";
@@ -35,6 +36,8 @@ import "@duffel/components/dist/CardPayment.min.css";
 import FlightOffer2 from "./Pages/Flights/index2";
 import { Preview } from "@mui/icons-material";
 import PreviousOrders from "./Pages/Orders/PreviousOrders";
+import Blog from "./Pages/Blog/Blog";
+import BlogDetail from "./Pages/Blog/BlogDetail";
 // ------------
 
 //
@@ -179,6 +182,24 @@ function App() {
               <>
                 <Header />
                 <PaymentFailed />
+              </>
+            }
+          />
+          <Route
+            path="/blog-detail/:id"
+            element={
+              <>
+                <Header />
+                <BlogDetail />
+              </>
+            }
+          />
+          <Route
+            path="/blog"
+            element={
+              <>
+                <Header />
+                <Blog />
               </>
             }
           />

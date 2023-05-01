@@ -1,7 +1,7 @@
 import { DUFFEL_AUTH_TOKEN, DUFFEL_VERSION } from ".";
-// export const BASE_URL = "http://localhost:5001";
+export const BASE_URL = "http://localhost:5000";
 // export const BASE_URL = "http://100.26.10.214:5000";
-export const BASE_URL = "https://flight-o1qw.onrender.com";
+// export const BASE_URL = "https://flight-o1qw.onrender.com";
 export const parse = (data) => JSON.parse(data);
 export const GetOFfer = (payload, callBack) => {
   var myHeaders = new Headers();
@@ -197,4 +197,43 @@ export const createOrder = (payload, callBack) => {
     .then((response) => response.text())
     .then((result) => callBack(JSON.parse(result)))
     .catch((error) => console.log("error", error));
+};
+
+export const getBlogs = (callBack) => {
+  try {
+    var myHeaders = new Headers();
+    myHeaders.append("Duffel-Version", DUFFEL_VERSION);
+    myHeaders.append("Authorization", DUFFEL_AUTH_TOKEN);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch(BASE_URL + "/blog/get", requestOptions)
+      .then((response) => response.text())
+      .then((result) => callBack(JSON.parse(result)))
+      .catch((error) => console.log("error", error));
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getBlogsSingle = (id, callBack) => {
+  try {
+    var myHeaders = new Headers();
+    myHeaders.append("Duffel-Version", DUFFEL_VERSION);
+    myHeaders.append("Authorization", DUFFEL_AUTH_TOKEN);
+
+    var requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow",
+    };
+    fetch(BASE_URL + "/blog/get?_id=" + id, requestOptions)
+      .then((response) => response.text())
+      .then((result) => callBack(JSON.parse(result)))
+      .catch((error) => console.log("error", error));
+  } catch (error) {
+    console.log(error);
+  }
 };
