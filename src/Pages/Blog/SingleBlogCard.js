@@ -52,11 +52,11 @@ export default function SingleBlogCard({ item = {} }) {
           onClick={() => {
             navigate(`/blog-detail/${item._id}`);
           }}
-          //   height="194px"
+            height="180px"
           style={{
             backgroundColor: ThemeColor.primaryColor,
             objectFit: "contain",
-            // width: "40%",
+//             width: "40%",
           }}
           src={item?.image ? item?.image : blogImage}
           //   width="40%"
