@@ -58,7 +58,7 @@ export default function SingleBlogCard({ item = {} }) {
             objectFit: "contain",
             // width: "40%",
           }}
-          src={false ? item?.image : blogImage}
+          src={item?.image ? item?.image : blogImage}
           //   width="40%"
         />
       </div>
